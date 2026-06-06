@@ -1,0 +1,2967 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HoneyCare — Your Complete Healthcare Ecosystem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --honey: #F5A623;
+  --honey-light: #FFD580;
+  --honey-dark: #C8821A;
+  --amber: #FF8C00;
+  --cream: #FFF8EE;
+  --gold: #FFD700;
+  --success: #22C55E;
+  --danger: #EF4444;
+  --warning: #F59E0B;
+  --info: #3B82F6;
+  --purple: #8B5CF6;
+  --teal: #14B8A6;
+  --pink: #EC4899;
+
+  --bg: #0A0A0F;
+  --bg2: #12121A;
+  --bg3: #1A1A26;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #F0F0F8;
+  --text2: #A0A0B8;
+  --text3: #606075;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --shadow: 0 8px 32px rgba(0,0,0,0.4);
+  --shadow-honey: 0 8px 32px rgba(245,166,35,0.25);
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+}
+[data-theme="light"] {
+  --bg: #F5F5FA;
+  --bg2: #EBEBF5;
+  --bg3: #E0E0F0;
+  --surface: rgba(0,0,0,0.03);
+  --surface2: rgba(0,0,0,0.06);
+  --border: rgba(0,0,0,0.08);
+  --border2: rgba(0,0,0,0.14);
+  --text: #1A1A2E;
+  --text2: #555570;
+  --text3: #9090A8;
+  --glass: rgba(255,255,255,0.7);
+  --glass-border: rgba(0,0,0,0.08);
+  --shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Outfit',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  overflow-x:hidden;
+  transition:background 0.3s,color 0.3s;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--honey);border-radius:3px;}
+
+/* PAGES */
+.page{display:none;min-height:100vh;animation:fadeIn 0.4s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== LOGIN PAGE ===== */
+#loginPage{
+  display:flex;min-height:100vh;align-items:center;justify-content:center;
+  background:var(--bg);
+  position:relative;overflow:hidden;
+}
+#loginPage.active{display:flex;}
+.login-bg{
+  position:absolute;inset:0;
+  background: radial-gradient(ellipse 80% 60% at 20% 20%, rgba(245,166,35,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 80% at 80% 80%, rgba(139,92,246,0.1) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 50% at 50% 50%, rgba(245,166,35,0.05) 0%, transparent 70%);
+}
+.honey-orbs{position:absolute;inset:0;pointer-events:none;}
+.orb{position:absolute;border-radius:50%;filter:blur(60px);animation:orbFloat 8s ease-in-out infinite;}
+.orb1{width:400px;height:400px;background:rgba(245,166,35,0.12);top:-100px;left:-100px;animation-delay:0s;}
+.orb2{width:300px;height:300px;background:rgba(139,92,246,0.08);bottom:-50px;right:-50px;animation-delay:-3s;}
+.orb3{width:200px;height:200px;background:rgba(20,184,166,0.08);top:50%;right:20%;animation-delay:-6s;}
+@keyframes orbFloat{0%,100%{transform:translate(0,0);}33%{transform:translate(20px,-20px);}66%{transform:translate(-10px,15px);}}
+
+.login-card{
+  position:relative;z-index:10;
+  background:var(--glass);
+  backdrop-filter:blur(24px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-xl);
+  padding:48px;
+  width:100%;max-width:440px;
+  box-shadow:var(--shadow);
+}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:36px;}
+.login-logo .logo-icon{
+  width:52px;height:52px;
+  background:linear-gradient(135deg,var(--honey),var(--amber));
+  border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:26px;
+  box-shadow:var(--shadow-honey);
+}
+.login-logo .logo-text{font-size:28px;font-weight:800;letter-spacing:-0.5px;}
+.login-logo .logo-text span{color:var(--honey);}
+.login-tagline{color:var(--text2);font-size:14px;margin-top:2px;}
+
+.login-welcome{margin-bottom:28px;}
+.login-welcome h2{font-size:24px;font-weight:700;margin-bottom:6px;}
+.login-welcome p{color:var(--text2);font-size:14px;}
+
+.form-group{margin-bottom:18px;}
+.form-group label{display:block;font-size:13px;font-weight:500;color:var(--text2);margin-bottom:8px;}
+.form-input{
+  width:100%;padding:14px 16px;
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:var(--radius-sm);
+  color:var(--text);font-family:'Outfit',sans-serif;font-size:15px;
+  transition:all 0.2s;outline:none;
+}
+.form-input:focus{border-color:var(--honey);box-shadow:0 0 0 3px rgba(245,166,35,0.15);}
+.form-input::placeholder{color:var(--text3);}
+
+.btn-primary{
+  width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--honey),var(--amber));
+  color:#fff;border:none;
+  border-radius:var(--radius-sm);
+  font-family:'Outfit',sans-serif;font-size:16px;font-weight:600;
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:var(--shadow-honey);
+  margin-top:8px;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(245,166,35,0.4);}
+.btn-primary:active{transform:translateY(0);}
+
+.login-hint{
+  margin-top:20px;padding:14px;
+  background:rgba(245,166,35,0.08);
+  border:1px solid rgba(245,166,35,0.2);
+  border-radius:var(--radius-sm);
+  font-size:13px;color:var(--text2);
+  display:flex;align-items:center;gap:8px;
+}
+.login-error{
+  display:none;color:var(--danger);font-size:13px;
+  margin-top:8px;text-align:center;
+}
+
+/* ===== MAIN APP ===== */
+#appShell{display:none;}
+#appShell.active{display:flex;min-height:100vh;}
+
+/* SIDEBAR */
+.sidebar{
+  width:260px;min-height:100vh;
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  position:fixed;left:0;top:0;bottom:0;
+  z-index:100;transition:transform 0.3s;
+  overflow-y:auto;
+}
+.sidebar-logo{
+  padding:24px 20px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid var(--border);
+}
+.sidebar-logo .logo-icon{
+  width:42px;height:42px;
+  background:linear-gradient(135deg,var(--honey),var(--amber));
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;
+}
+.sidebar-logo .logo-text{font-size:22px;font-weight:800;letter-spacing:-0.5px;}
+.sidebar-logo .logo-text span{color:var(--honey);}
+
+.sidebar-nav{flex:1;padding:16px 12px;overflow-y:auto;}
+.nav-section{margin-bottom:24px;}
+.nav-section-label{
+  font-size:10px;font-weight:600;letter-spacing:1.5px;
+  color:var(--text3);text-transform:uppercase;
+  padding:0 8px;margin-bottom:8px;
+}
+.nav-item{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 12px;border-radius:var(--radius-sm);
+  cursor:pointer;transition:all 0.2s;
+  color:var(--text2);font-size:14px;font-weight:500;
+  margin-bottom:2px;position:relative;
+}
+.nav-item:hover{background:var(--surface2);color:var(--text);}
+.nav-item.active{background:rgba(245,166,35,0.12);color:var(--honey);}
+.nav-item.active::before{
+  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;background:var(--honey);border-radius:0 2px 2px 0;
+}
+.nav-icon{font-size:18px;width:22px;text-align:center;}
+.nav-badge{
+  margin-left:auto;background:var(--danger);color:#fff;
+  font-size:10px;font-weight:700;padding:2px 6px;border-radius:20px;
+}
+
+.sidebar-footer{
+  padding:16px;border-top:1px solid var(--border);
+}
+.user-card{
+  display:flex;align-items:center;gap:12px;
+  padding:12px;border-radius:var(--radius-sm);
+  background:var(--surface);cursor:pointer;
+  transition:background 0.2s;
+}
+.user-card:hover{background:var(--surface2);}
+.user-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--honey),var(--purple));
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:700;color:#fff;
+}
+.user-info{flex:1;}
+.user-name{font-size:14px;font-weight:600;}
+.user-role{font-size:11px;color:var(--text2);}
+
+/* MAIN CONTENT */
+.main-content{
+  margin-left:260px;flex:1;min-height:100vh;
+  background:var(--bg);
+}
+
+/* TOP BAR */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(10,10,15,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 28px;
+  height:64px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+[data-theme="light"] .topbar{background:rgba(245,245,250,0.85);}
+.topbar-left{display:flex;align-items:center;gap:16px;}
+.page-title{font-size:18px;font-weight:700;}
+.breadcrumb{font-size:12px;color:var(--text3);}
+
+.topbar-right{display:flex;align-items:center;gap:12px;}
+.topbar-btn{
+  width:38px;height:38px;border-radius:10px;
+  background:var(--surface);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:18px;transition:all 0.2s;
+  position:relative;
+}
+.topbar-btn:hover{background:var(--surface2);}
+.topbar-btn .badge{
+  position:absolute;top:-4px;right:-4px;
+  width:18px;height:18px;border-radius:50%;
+  background:var(--danger);color:#fff;
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+
+.search-bar{
+  display:flex;align-items:center;gap:8px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:8px 14px;
+  font-size:14px;color:var(--text2);
+  cursor:pointer;transition:all 0.2s;min-width:220px;
+}
+.search-bar:hover{border-color:var(--border2);}
+
+/* INNER PAGE */
+.inner-page{display:none;padding:28px;}
+.inner-page.active{display:block;}
+
+/* CARDS */
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:24px;
+  transition:all 0.2s;
+}
+.card:hover{border-color:var(--border2);}
+.card-glass{
+  background:var(--glass);
+  backdrop-filter:blur(20px);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:24px;
+}
+
+/* GRID LAYOUTS */
+.grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+.grid-auto{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+
+/* STAT CARDS */
+.stat-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+  display:flex;align-items:center;gap:16px;
+  transition:all 0.25s;cursor:pointer;
+}
+.stat-card:hover{transform:translateY(-3px);border-color:var(--border2);box-shadow:var(--shadow);}
+.stat-icon{
+  width:52px;height:52px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;flex-shrink:0;
+}
+.stat-info{flex:1;}
+.stat-value{font-size:26px;font-weight:800;line-height:1;}
+.stat-label{font-size:13px;color:var(--text2);margin-top:4px;}
+.stat-change{font-size:12px;margin-top:6px;}
+.stat-change.up{color:var(--success);}
+.stat-change.down{color:var(--danger);}
+
+/* SECTION HEADERS */
+.section-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:20px;
+}
+.section-title{font-size:18px;font-weight:700;}
+.section-subtitle{font-size:13px;color:var(--text2);margin-top:3px;}
+.see-all{
+  font-size:13px;color:var(--honey);cursor:pointer;
+  font-weight:500;transition:opacity 0.2s;
+}
+.see-all:hover{opacity:0.8;}
+
+/* BUTTONS */
+.btn{
+  padding:10px 20px;border-radius:var(--radius-sm);
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:all 0.2s;border:none;display:inline-flex;
+  align-items:center;gap:8px;
+}
+.btn-honey{
+  background:linear-gradient(135deg,var(--honey),var(--amber));
+  color:#fff;box-shadow:0 4px 16px rgba(245,166,35,0.3);
+}
+.btn-honey:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,166,35,0.4);}
+.btn-outline{
+  background:transparent;color:var(--text);
+  border:1px solid var(--border2);
+}
+.btn-outline:hover{background:var(--surface2);}
+.btn-danger{background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;}
+.btn-success{background:linear-gradient(135deg,#22C55E,#16A34A);color:#fff;}
+.btn-ghost{background:transparent;color:var(--text2);}
+.btn-ghost:hover{color:var(--text);background:var(--surface);}
+.btn-sm{padding:7px 14px;font-size:13px;}
+.btn-lg{padding:14px 28px;font-size:16px;}
+.btn-icon{width:36px;height:36px;padding:0;justify-content:center;}
+
+/* PILLS/TAGS */
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 12px;border-radius:20px;font-size:12px;font-weight:500;
+}
+.pill-success{background:rgba(34,197,94,0.15);color:#22C55E;}
+.pill-danger{background:rgba(239,68,68,0.15);color:#EF4444;}
+.pill-warning{background:rgba(245,158,11,0.15);color:#F59E0B;}
+.pill-honey{background:rgba(245,166,35,0.15);color:var(--honey);}
+.pill-info{background:rgba(59,130,246,0.15);color:#3B82F6;}
+.pill-purple{background:rgba(139,92,246,0.15);color:#8B5CF6;}
+
+/* AVATAR */
+.avatar{
+  width:40px;height:40px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:700;font-size:16px;color:#fff;flex-shrink:0;
+}
+
+/* PROGRESS */
+.progress-bar{
+  height:6px;background:var(--surface2);border-radius:3px;overflow:hidden;
+}
+.progress-fill{height:100%;border-radius:3px;transition:width 1s ease;}
+
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--surface);border-radius:var(--radius-sm);padding:4px;margin-bottom:24px;}
+.tab{
+  flex:1;padding:9px 16px;text-align:center;border-radius:8px;
+  font-size:13px;font-weight:500;cursor:pointer;
+  transition:all 0.2s;color:var(--text2);
+}
+.tab.active{background:var(--honey);color:#fff;}
+
+/* SEARCH INPUT */
+.search-input-wrap{position:relative;margin-bottom:20px;}
+.search-input-wrap input{
+  width:100%;padding:12px 44px;
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);color:var(--text);
+  font-family:'Outfit',sans-serif;font-size:14px;outline:none;
+  transition:border-color 0.2s;
+}
+.search-input-wrap input:focus{border-color:var(--honey);}
+.search-input-wrap .search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;}
+
+/* LIST ITEMS */
+.list-item{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 0;border-bottom:1px solid var(--border);
+  transition:background 0.2s;cursor:pointer;
+}
+.list-item:last-child{border-bottom:none;}
+.list-item:hover{background:var(--surface);}
+.list-item-info{flex:1;}
+.list-item-title{font-size:14px;font-weight:600;margin-bottom:2px;}
+.list-item-sub{font-size:12px;color:var(--text2);}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{
+  padding:12px 16px;text-align:left;
+  font-size:12px;font-weight:600;color:var(--text3);
+  text-transform:uppercase;letter-spacing:0.8px;
+  background:var(--surface);border-bottom:1px solid var(--border);
+}
+td{padding:14px 16px;font-size:14px;border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--surface);}
+
+/* MODALS */
+.modal-overlay{
+  position:fixed;inset:0;z-index:1000;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-lg);padding:32px;
+  max-width:520px;width:100%;
+  animation:modalIn 0.3s ease;max-height:90vh;overflow-y:auto;
+}
+@keyframes modalIn{from{opacity:0;transform:scale(0.95);}to{opacity:1;transform:scale(1);}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-title{font-size:20px;font-weight:700;}
+.modal-close{width:32px;height:32px;border-radius:8px;background:var(--surface2);
+  border:none;color:var(--text2);cursor:pointer;font-size:18px;
+  display:flex;align-items:center;justify-content:center;transition:all 0.2s;}
+.modal-close:hover{background:var(--danger);color:#fff;}
+
+/* TOAST */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:2000;display:flex;flex-direction:column;gap:10px;}
+.toast{
+  background:var(--bg2);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:14px 18px;
+  display:flex;align-items:center;gap:12px;
+  box-shadow:var(--shadow);min-width:280px;
+  animation:toastIn 0.3s ease;font-size:14px;font-weight:500;
+}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+.toast-icon{font-size:20px;}
+.toast.success{border-left:3px solid var(--success);}
+.toast.error{border-left:3px solid var(--danger);}
+.toast.warning{border-left:3px solid var(--warning);}
+.toast.info{border-left:3px solid var(--info);}
+
+/* SOS BUTTON */
+.sos-btn{
+  background:linear-gradient(135deg,#EF4444,#DC2626);
+  color:#fff;border:none;padding:16px 32px;
+  border-radius:50px;font-size:18px;font-weight:800;
+  cursor:pointer;transition:all 0.2s;
+  box-shadow:0 0 0 0 rgba(239,68,68,0.4);
+  animation:sosGlow 2s ease-in-out infinite;
+  display:flex;align-items:center;gap:10px;
+  letter-spacing:1px;
+}
+@keyframes sosGlow{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.4);}50%{box-shadow:0 0 0 16px rgba(239,68,68,0);}}
+
+/* HEALTH SCORE */
+.health-score-ring{
+  width:120px;height:120px;
+  border-radius:50%;
+  background:conic-gradient(var(--honey) 0deg 306deg, var(--surface2) 306deg 360deg);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;flex-shrink:0;
+}
+.health-score-inner{
+  width:96px;height:96px;border-radius:50%;
+  background:var(--bg2);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.health-score-num{font-size:28px;font-weight:800;color:var(--honey);}
+.health-score-label{font-size:10px;color:var(--text2);font-weight:500;}
+
+/* DOCTOR CARD */
+.doctor-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+  transition:all 0.25s;cursor:pointer;
+}
+.doctor-card:hover{transform:translateY(-4px);border-color:var(--honey);box-shadow:var(--shadow-honey);}
+.doctor-avatar{
+  width:64px;height:64px;border-radius:20px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:28px;margin-bottom:14px;
+}
+.doctor-name{font-size:16px;font-weight:700;margin-bottom:4px;}
+.doctor-spec{font-size:13px;color:var(--honey);margin-bottom:8px;}
+.doctor-meta{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--text2);}
+.stars{color:var(--honey);font-size:13px;}
+
+/* AMBULANCE TRACKER */
+.tracker-map{
+  height:280px;border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(135deg,#0d1b2a 0%,#1a2a3a 100%);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--border);
+}
+.map-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(245,166,35,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(245,166,35,0.05) 1px,transparent 1px);
+  background-size:40px 40px;
+}
+.ambulance-dot{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--danger);
+  box-shadow:0 0 0 0 rgba(239,68,68,0.4);
+  animation:pulse 1.5s ease-in-out infinite;
+  position:absolute;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.4);}50%{box-shadow:0 0 0 12px rgba(239,68,68,0);}}
+.destination-dot{
+  width:16px;height:16px;border-radius:50%;
+  background:var(--success);position:absolute;right:30%;top:40%;
+}
+.route-line{
+  position:absolute;height:2px;background:linear-gradient(90deg,var(--danger),var(--success));
+  width:35%;left:35%;top:50%;transform:rotate(-10deg);opacity:0.6;
+}
+
+/* MEDICINE CARD */
+.med-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px;
+  display:flex;align-items:center;gap:14px;
+  transition:all 0.2s;cursor:pointer;
+}
+.med-card:hover{border-color:var(--border2);}
+.med-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  background:rgba(245,166,35,0.1);flex-shrink:0;
+}
+.med-name{font-size:14px;font-weight:600;margin-bottom:2px;}
+.med-info{font-size:12px;color:var(--text2);}
+.med-price{font-size:15px;font-weight:700;color:var(--honey);margin-top:4px;}
+
+/* BLOOD TYPE */
+.blood-type{
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,var(--danger),#DC2626);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;font-weight:800;color:#fff;flex-shrink:0;
+}
+
+/* AI CHAT */
+.chat-container{height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;padding:16px 0;}
+.chat-msg{display:flex;gap:12px;max-width:80%;}
+.chat-msg.user{align-self:flex-end;flex-direction:row-reverse;}
+.chat-bubble{
+  padding:12px 16px;border-radius:16px;font-size:14px;line-height:1.5;
+}
+.chat-msg.ai .chat-bubble{
+  background:var(--surface2);border-radius:16px 16px 16px 4px;
+}
+.chat-msg.user .chat-bubble{
+  background:linear-gradient(135deg,var(--honey),var(--amber));
+  color:#fff;border-radius:16px 16px 4px 16px;
+}
+.chat-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:16px;}
+.chat-input-wrap{display:flex;gap:10px;margin-top:16px;}
+.chat-input{
+  flex:1;padding:12px 16px;background:var(--surface);border:1px solid var(--border);
+  border-radius:50px;color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;
+}
+.chat-input:focus{border-color:var(--honey);}
+
+/* TIMELINE */
+.timeline{position:relative;padding-left:28px;}
+.timeline::before{content:'';position:absolute;left:10px;top:0;bottom:0;width:2px;background:var(--border);}
+.tl-item{position:relative;margin-bottom:24px;}
+.tl-dot{
+  position:absolute;left:-24px;top:4px;
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid var(--honey);background:var(--bg);
+}
+.tl-date{font-size:11px;color:var(--text3);margin-bottom:4px;}
+.tl-title{font-size:14px;font-weight:600;margin-bottom:2px;}
+.tl-sub{font-size:13px;color:var(--text2);}
+
+/* RECORD CARD */
+.record-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px;
+  display:flex;align-items:center;gap:14px;
+  transition:all 0.2s;cursor:pointer;
+}
+.record-card:hover{border-color:var(--honey);}
+.record-icon{
+  width:48px;height:48px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;
+}
+
+/* INSURANCE CARD */
+.insurance-card-visual{
+  border-radius:var(--radius);padding:24px;
+  background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);
+  position:relative;overflow:hidden;color:#fff;
+  border:1px solid rgba(255,255,255,0.1);
+}
+.insurance-card-visual .shimmer{
+  position:absolute;top:-50%;right:-30%;
+  width:200px;height:300px;
+  background:rgba(255,255,255,0.04);
+  border-radius:50%;transform:rotate(30deg);
+}
+
+/* CHARITY */
+.impact-number{font-size:36px;font-weight:900;color:var(--honey);line-height:1;}
+
+/* ORGAN */
+.organ-stat{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;text-align:center;
+}
+
+/* ADMIN CHART */
+.mini-chart{
+  height:60px;display:flex;align-items:flex-end;gap:4px;
+}
+.chart-bar{
+  flex:1;border-radius:3px 3px 0 0;
+  background:linear-gradient(to top,var(--honey),rgba(245,166,35,0.3));
+  transition:height 0.5s ease;
+}
+
+/* NOTIFICATION PANEL */
+.notif-panel{
+  position:fixed;top:64px;right:0;width:340px;
+  background:var(--bg2);border-left:1px solid var(--border);
+  height:calc(100vh - 64px);z-index:200;
+  overflow-y:auto;padding:20px;
+  transform:translateX(100%);transition:transform 0.3s;
+}
+.notif-panel.open{transform:translateX(0);}
+.notif-item{
+  display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);
+  cursor:pointer;
+}
+.notif-item:hover{opacity:0.8;}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--honey);margin-top:5px;flex-shrink:0;}
+
+/* FLOATING SOS */
+.floating-sos{
+  position:fixed;bottom:28px;right:28px;z-index:500;
+  width:60px;height:60px;border-radius:50%;
+  background:linear-gradient(135deg,#EF4444,#DC2626);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;cursor:pointer;
+  box-shadow:0 0 0 0 rgba(239,68,68,0.4);
+  animation:sosGlow 2s ease-in-out infinite;
+  border:none;color:#fff;transition:transform 0.2s;
+}
+.floating-sos:hover{transform:scale(1.1);}
+
+/* MOBILE TOGGLE */
+.mobile-menu-btn{display:none;}
+
+/* BOTTOM NAV (mobile only) */
+.bottom-nav{
+  display:none;
+  position:fixed;bottom:0;left:0;right:0;z-index:300;
+  background:var(--bg2);border-top:1px solid var(--border);
+  padding:8px 4px calc(8px + env(safe-area-inset-bottom));
+  grid-template-columns:repeat(5,1fr);
+  backdrop-filter:blur(20px);
+}
+.bn-item{
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:6px 4px;border-radius:10px;cursor:pointer;
+  transition:all 0.2s;color:var(--text3);font-size:10px;font-weight:500;
+}
+.bn-item.active{color:var(--honey);}
+.bn-item .bn-icon{font-size:22px;line-height:1;}
+
+/* HONEYCOMB DECORATION */
+.honeycomb-bg{
+  position:fixed;top:0;right:0;width:400px;height:400px;
+  opacity:0.03;pointer-events:none;z-index:0;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpolygon points='28,0 56,14 56,42 28,56 0,42 0,14' fill='none' stroke='%23F5A623' stroke-width='1'/%3E%3Cpolygon points='28,56 56,70 56,98 28,112 0,98 0,70' fill='none' stroke='%23F5A623' stroke-width='1'/%3E%3C/svg%3E");
+}
+
+/* ===== RESPONSIVE — TABLET ===== */
+@media(max-width:1024px){
+  .sidebar{width:220px;}
+  .main-content{margin-left:220px;}
+  .grid-4{grid-template-columns:repeat(2,1fr);}
+}
+
+/* ===== RESPONSIVE — MOBILE ===== */
+@media(max-width:768px){
+  /* Sidebar slides off */
+  .sidebar{transform:translateX(-100%);width:280px;z-index:200;}
+  .sidebar.open{transform:translateX(0);box-shadow:0 0 40px rgba(0,0,0,0.5);}
+  .main-content{margin-left:0;}
+  .mobile-menu-btn{display:flex !important;}
+
+  /* Bottom nav shows */
+  .bottom-nav{display:grid;}
+  /* Give content bottom padding so bottom nav doesn't cover it */
+  .main-content{padding-bottom:80px;}
+
+  /* Topbar */
+  .topbar{padding:0 14px;height:56px;}
+  .topbar .search-bar{display:none;}
+  .page-title{font-size:16px;}
+  .breadcrumb{display:none;}
+
+  /* Floating SOS moves above bottom nav */
+  .floating-sos{bottom:88px;right:16px;width:52px;height:52px;font-size:20px;}
+
+  /* Inner pages */
+  .inner-page{padding:14px 12px;}
+
+  /* Grids collapse */
+  .grid-4,.grid-3,.grid-2{grid-template-columns:1fr;}
+  .grid-auto{grid-template-columns:1fr;}
+
+  /* Welcome banner stacks */
+  .welcome-banner{flex-direction:column;align-items:flex-start;gap:16px;padding:20px;}
+  .welcome-banner .bg-emoji{display:none;}
+  .welcome-text h2{font-size:20px;}
+  .sos-btn{width:100%;justify-content:center;font-size:15px;padding:13px 20px;}
+
+  /* Feature grid — 4 per row on mobile */
+  .feature-grid{grid-template-columns:repeat(4,1fr);gap:8px;}
+  .feature-item{padding:12px 6px;}
+  .feature-item .fi-icon{font-size:22px;margin-bottom:6px;}
+  .feature-item .fi-label{font-size:10px;}
+
+  /* Cards */
+  .card{padding:16px;}
+  .stat-card{padding:14px;}
+  .stat-value{font-size:20px;}
+
+  /* Health overview stacks */
+  .health-score-ring{width:90px;height:90px;}
+  .health-score-inner{width:72px;height:72px;}
+  .health-score-num{font-size:20px;}
+
+  /* Vitals grid — 2 col */
+  .grid-4.vitals-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* Appointment card */
+  .appt-card{padding:14px;}
+
+  /* Tabs scroll horizontally */
+  .tabs{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch;}
+  .tab{white-space:nowrap;flex:0 0 auto;font-size:12px;padding:8px 12px;}
+
+  /* Doctor cards — 1 col */
+  .doctor-card{padding:16px;}
+
+  /* Section headers */
+  .section-header{flex-wrap:wrap;gap:8px;}
+  .section-title{font-size:16px;}
+
+  /* Buttons */
+  .btn-lg{padding:12px 20px;font-size:14px;}
+
+  /* Insurance card */
+  .insurance-card-visual{padding:18px;}
+
+  /* Table scrollable */
+  .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  table{min-width:540px;}
+  th,td{padding:10px 12px;font-size:13px;}
+
+  /* Chat */
+  .chat-container{height:300px;}
+  .chat-msg{max-width:92%;}
+
+  /* Modal */
+  .modal{padding:20px;margin:10px;}
+  .modal-title{font-size:17px;}
+
+  /* Login card */
+  .login-card{padding:28px 20px;margin:16px;}
+
+  /* Steps */
+  .steps{gap:4px;}
+  .step-label{display:none;}
+  .step-line{margin:0 4px;}
+
+  /* Notif panel */
+  .notif-panel{width:100%;top:56px;height:calc(100vh - 56px);}
+
+  /* Blood availability */
+  .blood-type{width:44px;height:44px;font-size:12px;}
+
+  /* Tracker map */
+  .tracker-map{height:200px;}
+
+  /* Organ stat grid */
+  .grid-4.organ-grid{grid-template-columns:repeat(2,1fr);}
+
+  /* Admin stat numbers */
+  .stat-value{font-size:18px;}
+}
+
+/* ===== VERY SMALL PHONES ===== */
+@media(max-width:380px){
+  .feature-grid{grid-template-columns:repeat(3,1fr);}
+  .topbar-btn{width:32px;height:32px;font-size:15px;}
+  .inner-page{padding:10px 8px;}
+  .card{padding:12px;}
+  .grid-4{grid-template-columns:repeat(2,1fr);}
+}
+
+/* WAVEFORM */
+.waveform{display:flex;align-items:center;gap:3px;height:40px;}
+.wave-bar{
+  width:4px;border-radius:2px;
+  background:linear-gradient(to top,var(--honey),var(--amber));
+  animation:waveAnim 1s ease-in-out infinite;
+}
+@keyframes waveAnim{0%,100%{height:6px;}50%{height:30px;}}
+
+/* TYPING INDICATOR */
+.typing{display:flex;gap:4px;align-items:center;padding:12px 16px;}
+.typing span{width:8px;height:8px;border-radius:50%;background:var(--text3);animation:typingBounce 1s ease-in-out infinite;}
+.typing span:nth-child(2){animation-delay:0.2s;}
+.typing span:nth-child(3){animation-delay:0.4s;}
+@keyframes typingBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);background:var(--honey);}}
+
+/* THEME TOGGLE */
+.theme-toggle{
+  width:52px;height:28px;border-radius:14px;
+  background:var(--surface2);border:1px solid var(--border);
+  position:relative;cursor:pointer;transition:background 0.3s;
+}
+.theme-toggle.on{background:var(--honey);}
+.toggle-thumb{
+  width:22px;height:22px;border-radius:50%;background:#fff;
+  position:absolute;top:2px;left:3px;transition:left 0.3s;
+  display:flex;align-items:center;justify-content:center;font-size:12px;
+}
+.theme-toggle.on .toggle-thumb{left:27px;}
+
+/* LOADER */
+.loader{
+  width:24px;height:24px;border:3px solid var(--border2);
+  border-top-color:var(--honey);border-radius:50%;
+  animation:spin 0.8s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* WELCOME BANNER */
+.welcome-banner{
+  background:linear-gradient(135deg,rgba(245,166,35,0.12) 0%,rgba(245,166,35,0.04) 100%);
+  border:1px solid rgba(245,166,35,0.2);
+  border-radius:var(--radius-lg);
+  padding:28px 32px;
+  margin-bottom:28px;
+  position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.welcome-banner .bg-emoji{
+  position:absolute;right:120px;top:50%;transform:translateY(-50%);
+  font-size:80px;opacity:0.15;
+}
+.welcome-text h2{font-size:26px;font-weight:800;margin-bottom:6px;}
+.welcome-text p{color:var(--text2);font-size:15px;}
+
+/* APPOINTMENT CARD */
+.appt-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:20px;
+  display:flex;gap:16px;cursor:pointer;transition:all 0.2s;
+}
+.appt-card:hover{border-color:var(--honey);}
+.appt-date-block{
+  text-align:center;background:rgba(245,166,35,0.1);
+  border-radius:10px;padding:10px 14px;flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.appt-day{font-size:24px;font-weight:800;color:var(--honey);line-height:1;}
+.appt-month{font-size:11px;color:var(--honey);font-weight:600;text-transform:uppercase;}
+
+/* FEATURE CARDS HOMEPAGE */
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:14px;margin-bottom:28px;}
+.feature-item{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);padding:18px 14px;
+  text-align:center;cursor:pointer;transition:all 0.25s;
+}
+.feature-item:hover{transform:translateY(-4px);border-color:var(--honey);background:rgba(245,166,35,0.05);}
+.feature-item .fi-icon{font-size:28px;margin-bottom:10px;display:block;}
+.feature-item .fi-label{font-size:12px;font-weight:600;color:var(--text2);}
+
+/* VITALS */
+.vital-card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px;text-align:center;
+}
+.vital-val{font-size:22px;font-weight:800;}
+.vital-unit{font-size:11px;color:var(--text3);}
+.vital-label{font-size:12px;color:var(--text2);margin-top:4px;}
+
+/* INPUT GROUP */
+.input-group{
+  display:flex;flex-direction:column;gap:6px;margin-bottom:16px;
+}
+.input-group label{font-size:13px;font-weight:500;color:var(--text2);}
+.input-group select,.input-group textarea{
+  padding:11px 14px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  color:var(--text);font-family:'Outfit',sans-serif;font-size:14px;outline:none;
+  transition:border-color 0.2s;
+}
+.input-group select:focus,.input-group textarea:focus,.form-input:focus{border-color:var(--honey);}
+.input-group select option{background:var(--bg2);}
+
+/* CART BADGE */
+.cart-count{
+  position:absolute;top:-5px;right:-5px;
+  background:var(--danger);color:#fff;
+  border-radius:50%;width:18px;height:18px;
+  font-size:10px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+}
+
+/* SUCCESS SCREEN */
+.success-screen{
+  display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:40px;
+}
+.success-icon{font-size:64px;margin-bottom:16px;}
+.success-title{font-size:22px;font-weight:700;margin-bottom:8px;}
+.success-sub{color:var(--text2);font-size:15px;}
+
+/* STEP INDICATOR */
+.steps{display:flex;align-items:center;margin-bottom:28px;}
+.step{
+  display:flex;align-items:center;gap:8px;flex:1;
+}
+.step-num{
+  width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0;
+  background:var(--surface2);color:var(--text3);
+}
+.step.active .step-num{background:var(--honey);color:#fff;}
+.step.done .step-num{background:var(--success);color:#fff;}
+.step-label{font-size:12px;color:var(--text3);}
+.step.active .step-label{color:var(--text);font-weight:600;}
+.step-line{height:2px;flex:1;background:var(--border);margin:0 8px;}
+.step.done+.step .step-line{background:var(--success);}
+
+/* HONEY GRADIENT TEXT */
+.gradient-text{
+  background:linear-gradient(135deg,var(--honey),var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+
+/* ANIMATIONS */
+.fade-up{animation:fadeUp 0.5s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.stagger > *:nth-child(1){animation-delay:0.05s;}
+.stagger > *:nth-child(2){animation-delay:0.1s;}
+.stagger > *:nth-child(3){animation-delay:0.15s;}
+.stagger > *:nth-child(4){animation-delay:0.2s;}
+.stagger > *:nth-child(5){animation-delay:0.25s;}
+.stagger > *:nth-child(6){animation-delay:0.3s;}
+
+/* OVERLAY SIDEBAR */
+.sidebar-overlay{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:rgba(0,0,0,0.5);
+}
+.sidebar-overlay.show{display:block;}
+</style>
+</head>
+<body>
+
+<!-- ===== LOGIN PAGE ===== -->
+<div id="loginPage" class="page active">
+  <div class="login-bg"></div>
+  <div class="honey-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+  <div class="login-card fade-up">
+    <div class="login-logo">
+      <div class="logo-icon">🍯</div>
+      <div>
+        <div class="logo-text">Honey<span>Care</span></div>
+        <div class="login-tagline">Your Complete Healthcare Ecosystem</div>
+      </div>
+    </div>
+    <div class="login-welcome">
+      <h2>Welcome back 👋</h2>
+      <p>Sign in to your HoneyCare account to continue</p>
+    </div>
+    <div class="form-group">
+      <label>Username</label>
+      <input type="text" class="form-input" id="loginUser" placeholder="Enter your username">
+    </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" class="form-input" id="loginPass" placeholder="Enter your password">
+    </div>
+    <div class="login-error" id="loginError">❌ Invalid credentials. Please try again.</div>
+    <button class="btn-primary" onclick="doLogin()">Sign In to HoneyCare</button>
+    <div class="login-hint">
+      <span>💡</span>
+      <span>Demo: <strong>anusha</strong> / <strong>0501</strong></span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== APP SHELL ===== -->
+<div id="appShell">
+  <div class="honeycomb-bg"></div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+  <!-- SIDEBAR -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-icon">🍯</div>
+      <div>
+        <div class="logo-text">Honey<span>Care</span></div>
+      </div>
+    </div>
+    <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-label">Main</div>
+        <div class="nav-item active" onclick="showPage('dashboard')">
+          <span class="nav-icon">🏠</span> Dashboard
+        </div>
+        <div class="nav-item" onclick="showPage('consultation')">
+          <span class="nav-icon">👨‍⚕️</span> Doctor Consultation
+          <span class="nav-badge">3</span>
+        </div>
+        <div class="nav-item" onclick="showPage('ambulance')">
+          <span class="nav-icon">🚑</span> Ambulance
+        </div>
+        <div class="nav-item" onclick="showPage('medicines')">
+          <span class="nav-icon">💊</span> Medicine Delivery
+        </div>
+        <div class="nav-item" onclick="showPage('hospitals')">
+          <span class="nav-icon">🏥</span> Hospital Network
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Health Services</div>
+        <div class="nav-item" onclick="showPage('blood')">
+          <span class="nav-icon">🩸</span> Blood Donation
+        </div>
+        <div class="nav-item" onclick="showPage('ai')">
+          <span class="nav-icon">🤖</span> AI Health Assistant
+        </div>
+        <div class="nav-item" onclick="showPage('records')">
+          <span class="nav-icon">📁</span> Health Records
+        </div>
+        <div class="nav-item" onclick="showPage('insurance')">
+          <span class="nav-icon">🛡️</span> Insurance Portal
+        </div>
+        <div class="nav-item" onclick="showPage('charity')">
+          <span class="nav-icon">❤️</span> Charity Healthcare
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">Specialized Care</div>
+        <div class="nav-item" onclick="showPage('womenchild')">
+          <span class="nav-icon">🤱</span> Women & Child
+        </div>
+        <div class="nav-item" onclick="showPage('senior')">
+          <span class="nav-icon">👴</span> Senior Citizen
+        </div>
+        <div class="nav-item" onclick="showPage('mental')">
+          <span class="nav-icon">🧠</span> Mental Health
+        </div>
+        <div class="nav-item" onclick="showPage('organ')">
+          <span class="nav-icon">💝</span> Organ Donation
+        </div>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-label">System</div>
+        <div class="nav-item" onclick="showPage('admin')">
+          <span class="nav-icon">⚙️</span> Admin Center
+        </div>
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <div class="user-card" onclick="showToast('Profile settings coming soon!','info')">
+        <div class="user-avatar">A</div>
+        <div class="user-info">
+          <div class="user-name">Anusha</div>
+          <div class="user-role">Premium Patient</div>
+        </div>
+        <span style="color:var(--text3);font-size:18px;">⋮</span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu-btn topbar-btn" onclick="toggleSidebar()">☰</button>
+        <div>
+          <div class="page-title" id="topbarTitle">Dashboard</div>
+          <div class="breadcrumb" id="topbarBread">HoneyCare / Home</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="search-bar" onclick="showToast('🔍 Global search activated','info')">
+          <span>🔍</span>
+          <span>Search anything...</span>
+        </div>
+        <div class="topbar-btn" onclick="toggleTheme()">
+          <span id="themeIcon">☀️</span>
+        </div>
+        <div class="topbar-btn" onclick="toggleNotifications()" style="position:relative;">
+          🔔
+          <div class="badge">4</div>
+        </div>
+        <div class="topbar-btn" onclick="doLogout()">🚪</div>
+      </div>
+    </header>
+
+    <!-- NOTIFICATION PANEL -->
+    <div class="notif-panel" id="notifPanel">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div style="font-size:16px;font-weight:700;">Notifications</div>
+        <button class="btn btn-ghost btn-sm" onclick="toggleNotifications()">✕</button>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot" style="background:#22C55E;"></div>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Dr. Priya confirmed your appointment</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:3px;">Today at 3:00 PM • Cardiology</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot" style="background:var(--honey);"></div>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Medicine delivery on the way</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:3px;">Order #HC-4821 • ETA 25 min</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot" style="background:var(--danger);"></div>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Blood request: O+ needed</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:3px;">Emergency • Apollo Hospital, Hyderabad</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot" style="background:var(--purple);"></div>
+        <div>
+          <div style="font-size:14px;font-weight:600;">Lab report ready to download</div>
+          <div style="font-size:12px;color:var(--text2);margin-top:3px;">Complete Blood Count • Jun 3, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== PAGES ===================== -->
+
+    <!-- DASHBOARD -->
+    <div class="inner-page active" id="page-dashboard">
+      <div class="welcome-banner fade-up">
+        <div class="bg-emoji">🍯</div>
+        <div class="welcome-text">
+          <h2>Good morning, Anusha! 👋</h2>
+          <p>Your health score is <strong style="color:var(--honey)">85/100</strong> — Great! Keep it up.</p>
+          <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;">
+            <button class="btn btn-honey btn-sm" onclick="showPage('consultation')">Book Appointment</button>
+            <button class="btn btn-outline btn-sm" onclick="showPage('ai')">AI Health Check</button>
+          </div>
+        </div>
+        <button class="sos-btn" onclick="triggerSOS()">🚨 SOS</button>
+      </div>
+
+      <!-- Feature Grid -->
+      <div class="feature-grid stagger">
+        <div class="feature-item fade-up" onclick="showPage('consultation')"><span class="fi-icon">👨‍⚕️</span><div class="fi-label">Consult Doctor</div></div>
+        <div class="feature-item fade-up" onclick="showPage('ambulance')"><span class="fi-icon">🚑</span><div class="fi-label">Ambulance</div></div>
+        <div class="feature-item fade-up" onclick="showPage('medicines')"><span class="fi-icon">💊</span><div class="fi-label">Medicines</div></div>
+        <div class="feature-item fade-up" onclick="showPage('hospitals')"><span class="fi-icon">🏥</span><div class="fi-label">Hospitals</div></div>
+        <div class="feature-item fade-up" onclick="showPage('blood')"><span class="fi-icon">🩸</span><div class="fi-label">Blood Bank</div></div>
+        <div class="feature-item fade-up" onclick="showPage('ai')"><span class="fi-icon">🤖</span><div class="fi-label">AI Assistant</div></div>
+        <div class="feature-item fade-up" onclick="showPage('records')"><span class="fi-icon">📁</span><div class="fi-label">My Records</div></div>
+        <div class="feature-item fade-up" onclick="showPage('insurance')"><span class="fi-icon">🛡️</span><div class="fi-label">Insurance</div></div>
+        <div class="feature-item fade-up" onclick="showPage('charity')"><span class="fi-icon">❤️</span><div class="fi-label">Donate</div></div>
+        <div class="feature-item fade-up" onclick="showPage('mental')"><span class="fi-icon">🧠</span><div class="fi-label">Mental Health</div></div>
+        <div class="feature-item fade-up" onclick="showPage('womenchild')"><span class="fi-icon">🤱</span><div class="fi-label">Women & Child</div></div>
+        <div class="feature-item fade-up" onclick="showPage('organ')"><span class="fi-icon">💝</span><div class="fi-label">Organ Donation</div></div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <!-- Health Score -->
+        <div class="card">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Health Overview</div>
+              <div class="section-subtitle">Your wellness summary</div>
+            </div>
+            <span class="see-all" onclick="showToast('Full health report loading...','info')">View Report</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:24px;margin-bottom:20px;">
+            <div class="health-score-ring">
+              <div class="health-score-inner">
+                <div class="health-score-num">85</div>
+                <div class="health-score-label">HEALTH SCORE</div>
+              </div>
+            </div>
+            <div style="flex:1;">
+              <div style="margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+                  <span>Heart Health</span><span style="color:var(--success);">92%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:92%;background:linear-gradient(90deg,#22C55E,#16A34A);"></div></div>
+              </div>
+              <div style="margin-bottom:14px;">
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+                  <span>Blood Sugar</span><span style="color:var(--warning);">73%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:73%;background:linear-gradient(90deg,#F59E0B,#D97706);"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;">
+                  <span>BMI Score</span><span style="color:var(--honey);">80%</span>
+                </div>
+                <div class="progress-bar"><div class="progress-fill" style="width:80%;background:linear-gradient(90deg,var(--honey),var(--amber));"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="grid-4" style="gap:10px;">
+            <div class="vital-card"><div class="vital-val" style="color:var(--danger);">120</div><div class="vital-unit">mmHg</div><div class="vital-label">Blood Pressure</div></div>
+            <div class="vital-card"><div class="vital-val" style="color:var(--success);">72</div><div class="vital-unit">bpm</div><div class="vital-label">Heart Rate</div></div>
+            <div class="vital-card"><div class="vital-val" style="color:var(--info);">98.4</div><div class="vital-unit">°F</div><div class="vital-label">Temperature</div></div>
+            <div class="vital-card"><div class="vital-val" style="color:var(--purple);">99</div><div class="vital-unit">%</div><div class="vital-label">SpO2</div></div>
+          </div>
+        </div>
+
+        <!-- Appointments -->
+        <div class="card">
+          <div class="section-header">
+            <div>
+              <div class="section-title">Upcoming Appointments</div>
+              <div class="section-subtitle">3 scheduled this week</div>
+            </div>
+            <button class="btn btn-honey btn-sm" onclick="showPage('consultation')">+ Book</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div class="appt-card">
+              <div class="appt-date-block"><div class="appt-day">08</div><div class="appt-month">Jun</div></div>
+              <div style="flex:1;">
+                <div style="font-size:14px;font-weight:600;">Dr. Priya Sharma</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:2px;">Cardiologist • 3:00 PM</div>
+                <div style="margin-top:8px;display:flex;gap:8px;">
+                  <span class="pill pill-success">Confirmed</span>
+                  <span class="pill pill-info">Video Call</span>
+                </div>
+              </div>
+              <button class="btn btn-honey btn-sm" onclick="showToast('Joining video call...','success')">Join</button>
+            </div>
+            <div class="appt-card">
+              <div class="appt-date-block"><div class="appt-day">12</div><div class="appt-month">Jun</div></div>
+              <div style="flex:1;">
+                <div style="font-size:14px;font-weight:600;">Dr. Rahul Mehta</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:2px;">Neurologist • 11:00 AM</div>
+                <div style="margin-top:8px;display:flex;gap:8px;">
+                  <span class="pill pill-warning">Pending</span>
+                  <span class="pill pill-info">In-Person</span>
+                </div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="showToast('Appointment details loaded','info')">View</button>
+            </div>
+            <div class="appt-card">
+              <div class="appt-date-block"><div class="appt-day">18</div><div class="appt-month">Jun</div></div>
+              <div style="flex:1;">
+                <div style="font-size:14px;font-weight:600;">Dr. Anjali Singh</div>
+                <div style="font-size:12px;color:var(--text2);margin-top:2px;">General Physician • 9:00 AM</div>
+                <div style="margin-top:8px;display:flex;gap:8px;">
+                  <span class="pill pill-success">Confirmed</span>
+                  <span class="pill pill-purple">Chat</span>
+                </div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="showToast('Opening chat...','info')">Chat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="grid-4 stagger" style="margin-bottom:24px;">
+        <div class="stat-card fade-up">
+          <div class="stat-icon" style="background:rgba(245,166,35,0.1);">💊</div>
+          <div class="stat-info">
+            <div class="stat-value gradient-text">3</div>
+            <div class="stat-label">Active Medicines</div>
+            <div class="stat-change up">↑ Next dose at 8 PM</div>
+          </div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-icon" style="background:rgba(34,197,94,0.1);">🩺</div>
+          <div class="stat-info">
+            <div class="stat-value" style="color:#22C55E;">12</div>
+            <div class="stat-label">Consultations</div>
+            <div class="stat-change up">↑ This year</div>
+          </div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-icon" style="background:rgba(59,130,246,0.1);">📄</div>
+          <div class="stat-info">
+            <div class="stat-value" style="color:#3B82F6;">8</div>
+            <div class="stat-label">Health Records</div>
+            <div class="stat-change up">↑ 2 new this month</div>
+          </div>
+        </div>
+        <div class="stat-card fade-up">
+          <div class="stat-icon" style="background:rgba(139,92,246,0.1);">🏃</div>
+          <div class="stat-info">
+            <div class="stat-value" style="color:#8B5CF6;">7.2k</div>
+            <div class="stat-label">Steps Today</div>
+            <div class="stat-change down">↓ Goal: 10k</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <!-- Medicine Reminders -->
+        <div class="card">
+          <div class="section-header">
+            <div class="section-title">Medicine Reminders</div>
+            <span class="see-all">Manage All</span>
+          </div>
+          <div>
+            <div class="list-item">
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(34,197,94,0.1);display:flex;align-items:center;justify-content:center;font-size:18px;">💊</div>
+              <div class="list-item-info">
+                <div class="list-item-title">Metformin 500mg</div>
+                <div class="list-item-sub">After breakfast • 8:00 AM ✅ Taken</div>
+              </div>
+              <span class="pill pill-success">Done</span>
+            </div>
+            <div class="list-item">
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(245,166,35,0.1);display:flex;align-items:center;justify-content:center;font-size:18px;">🫀</div>
+              <div class="list-item-info">
+                <div class="list-item-title">Atorvastatin 10mg</div>
+                <div class="list-item-sub">After dinner • 8:00 PM • Upcoming</div>
+              </div>
+              <span class="pill pill-warning">Pending</span>
+            </div>
+            <div class="list-item">
+              <div style="width:40px;height:40px;border-radius:12px;background:rgba(239,68,68,0.1);display:flex;align-items:center;justify-content:center;font-size:18px;">💉</div>
+              <div class="list-item-info">
+                <div class="list-item-title">Vitamin D3 Injection</div>
+                <div class="list-item-sub">Monthly • June 15, 2026</div>
+              </div>
+              <span class="pill pill-info">Scheduled</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Medical Timeline -->
+        <div class="card">
+          <div class="section-header">
+            <div class="section-title">Medical Timeline</div>
+            <span class="see-all" onclick="showPage('records')">Full History</span>
+          </div>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-date">Jun 3, 2026</div>
+              <div class="tl-title">Blood Test – CBC</div>
+              <div class="tl-sub">Apollo Diagnostics • All normal</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-date">May 18, 2026</div>
+              <div class="tl-title">Cardiology Consultation</div>
+              <div class="tl-sub">Dr. Priya Sharma • Routine checkup</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-date">Apr 27, 2026</div>
+              <div class="tl-title">ECG + Echo</div>
+              <div class="tl-sub">City Hospital • Normal sinus rhythm</div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-date">Mar 10, 2026</div>
+              <div class="tl-title">Annual Health Checkup</div>
+              <div class="tl-sub">HoneyCare Clinic • 24 parameters</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== DOCTOR CONSULTATION ===== -->
+    <div class="inner-page" id="page-consultation">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div>
+          <div class="section-title" style="font-size:22px;">Doctor Consultation</div>
+          <div class="section-subtitle">Connect with 2,400+ certified specialists</div>
+        </div>
+        <button class="btn btn-honey" onclick="openModal('bookApptModal')">📅 Book Appointment</button>
+      </div>
+
+      <div class="tabs" id="consultTabs">
+        <div class="tab active" onclick="switchTab('consultTabs',this,'consultTabContent','doctors')">👨‍⚕️ Find Doctors</div>
+        <div class="tab" onclick="switchTab('consultTabs',this,'consultTabContent','myAppts')">📅 My Appointments</div>
+        <div class="tab" onclick="switchTab('consultTabs',this,'consultTabContent','prescriptions')">📋 Prescriptions</div>
+      </div>
+
+      <div id="consultTabContent">
+        <!-- Doctors tab -->
+        <div id="tab-doctors">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input placeholder="Search doctors by name, specialty, location..." oninput="showToast('Searching...','info')">
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+            <button class="btn btn-honey btn-sm">All Specialties</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Filtering by Cardiologist','info')">🫀 Cardiologist</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Filtering by Neurologist','info')">🧠 Neurologist</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Filtering by Pediatrician','info')">👶 Pediatrician</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Filtering by Dermatologist','info')">🌿 Dermatologist</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Filtering by Orthopedic','info')">🦴 Orthopedic</button>
+          </div>
+          <div class="grid-3 stagger">
+            <div class="doctor-card fade-up">
+              <div class="doctor-avatar" style="background:rgba(245,166,35,0.1);">👩‍⚕️</div>
+              <div class="doctor-name">Dr. Priya Sharma</div>
+              <div class="doctor-spec">Cardiologist</div>
+              <div class="doctor-meta">
+                <span>⭐ 4.9</span><span>•</span><span>12 yrs exp</span><span>•</span>
+                <span class="pill pill-success" style="font-size:10px;">Available</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="btn btn-honey btn-sm" style="flex:1;" onclick="openConsultModal('Dr. Priya Sharma','Cardiologist')">Book</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Opening profile...','info')">Profile</button>
+              </div>
+            </div>
+            <div class="doctor-card fade-up">
+              <div class="doctor-avatar" style="background:rgba(59,130,246,0.1);">👨‍⚕️</div>
+              <div class="doctor-name">Dr. Rahul Mehta</div>
+              <div class="doctor-spec">Neurologist</div>
+              <div class="doctor-meta">
+                <span>⭐ 4.8</span><span>•</span><span>9 yrs exp</span><span>•</span>
+                <span class="pill pill-warning" style="font-size:10px;">Busy</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="btn btn-honey btn-sm" style="flex:1;" onclick="openConsultModal('Dr. Rahul Mehta','Neurologist')">Book</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Opening profile...','info')">Profile</button>
+              </div>
+            </div>
+            <div class="doctor-card fade-up">
+              <div class="doctor-avatar" style="background:rgba(34,197,94,0.1);">👩‍⚕️</div>
+              <div class="doctor-name">Dr. Anjali Singh</div>
+              <div class="doctor-spec">General Physician</div>
+              <div class="doctor-meta">
+                <span>⭐ 4.7</span><span>•</span><span>15 yrs exp</span><span>•</span>
+                <span class="pill pill-success" style="font-size:10px;">Available</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="btn btn-honey btn-sm" style="flex:1;" onclick="openConsultModal('Dr. Anjali Singh','General Physician')">Book</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Opening profile...','info')">Profile</button>
+              </div>
+            </div>
+            <div class="doctor-card fade-up">
+              <div class="doctor-avatar" style="background:rgba(139,92,246,0.1);">👨‍⚕️</div>
+              <div class="doctor-name">Dr. Kiran Reddy</div>
+              <div class="doctor-spec">Orthopedic Surgeon</div>
+              <div class="doctor-meta">
+                <span>⭐ 4.9</span><span>•</span><span>18 yrs exp</span><span>•</span>
+                <span class="pill pill-success" style="font-size:10px;">Available</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="btn btn-honey btn-sm" style="flex:1;" onclick="openConsultModal('Dr. Kiran Reddy','Orthopedic Surgeon')">Book</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Opening profile...','info')">Profile</button>
+              </div>
+            </div>
+            <div class="doctor-card fade-up">
+              <div class="doctor-avatar" style="background:rgba(236,72,153,0.1);">👩‍⚕️</div>
+              <div class="doctor-name">Dr. Meera Nair</div>
+              <div class="doctor-spec">Pediatrician</div>
+              <div class="doctor-meta">
+                <span>⭐ 4.8</span><span>•</span><span>11 yrs exp</span><span>•</span>
+                <span class="pill pill-success" style="font-size:10px;">Available</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="btn btn-honey btn-sm" style="flex:1;" onclick="openConsultModal('Dr. Meera Nair','Pediatrician')">Book</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Opening profile...','info')">Profile</button>
+              </div>
+            </div>
+            <div class="doctor-card fade-up">
+              <div class="doctor-avatar" style="background:rgba(20,184,166,0.1);">👨‍⚕️</div>
+              <div class="doctor-name">Dr. Suresh Kumar</div>
+              <div class="doctor-spec">Dermatologist</div>
+              <div class="doctor-meta">
+                <span>⭐ 4.6</span><span>•</span><span>8 yrs exp</span><span>•</span>
+                <span class="pill pill-success" style="font-size:10px;">Available</span>
+              </div>
+              <div style="display:flex;gap:8px;margin-top:14px;">
+                <button class="btn btn-honey btn-sm" style="flex:1;" onclick="openConsultModal('Dr. Suresh Kumar','Dermatologist')">Book</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Opening profile...','info')">Profile</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- My Appointments tab (hidden by default) -->
+        <div id="tab-myAppts" style="display:none;">
+          <div class="table-wrap card">
+            <table>
+              <thead><tr><th>Doctor</th><th>Specialty</th><th>Date & Time</th><th>Type</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td>Dr. Priya Sharma</td><td>Cardiologist</td><td>Jun 8, 3:00 PM</td><td><span class="pill pill-info">Video</span></td><td><span class="pill pill-success">Confirmed</span></td><td><button class="btn btn-honey btn-sm" onclick="showToast('Joining call...','success')">Join</button></td></tr>
+                <tr><td>Dr. Rahul Mehta</td><td>Neurologist</td><td>Jun 12, 11:00 AM</td><td><span class="pill pill-purple">In-Person</span></td><td><span class="pill pill-warning">Pending</span></td><td><button class="btn btn-outline btn-sm" onclick="showToast('Viewing details...','info')">View</button></td></tr>
+                <tr><td>Dr. Anjali Singh</td><td>GP</td><td>Jun 18, 9:00 AM</td><td><span class="pill pill-honey">Chat</span></td><td><span class="pill pill-success">Confirmed</span></td><td><button class="btn btn-outline btn-sm" onclick="showToast('Opening chat...','info')">Chat</button></td></tr>
+                <tr><td>Dr. Kiran Reddy</td><td>Orthopedic</td><td>May 22, 2:00 PM</td><td><span class="pill pill-purple">In-Person</span></td><td><span class="pill pill-info">Completed</span></td><td><button class="btn btn-outline btn-sm" onclick="showToast('Viewing prescription...','info')">Rx</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Prescriptions tab -->
+        <div id="tab-prescriptions" style="display:none;">
+          <div class="grid-2">
+            <div class="record-card"><div class="record-icon" style="background:rgba(245,166,35,0.1);">📋</div><div style="flex:1;"><div class="list-item-title">Prescription — Cardiologist</div><div class="list-item-sub">Dr. Priya Sharma • May 18, 2026 • 3 medicines</div></div><button class="btn btn-outline btn-sm" onclick="showToast('Downloading prescription...','success')">⬇️ Download</button></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(59,130,246,0.1);">📋</div><div style="flex:1;"><div class="list-item-title">Prescription — Neurology</div><div class="list-item-sub">Dr. Rahul Mehta • Apr 12, 2026 • 2 medicines</div></div><button class="btn btn-outline btn-sm" onclick="showToast('Downloading prescription...','success')">⬇️ Download</button></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(34,197,94,0.1);">📋</div><div style="flex:1;"><div class="list-item-title">Prescription — General</div><div class="list-item-sub">Dr. Anjali Singh • Mar 10, 2026 • 4 medicines</div></div><button class="btn btn-outline btn-sm" onclick="showToast('Downloading prescription...','success')">⬇️ Download</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== AMBULANCE ===== -->
+    <div class="inner-page" id="page-ambulance">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div>
+          <div class="section-title" style="font-size:22px;">Ambulance Services</div>
+          <div class="section-subtitle">One-tap emergency dispatch • 24/7</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline">📞 Call: 108</button>
+          <button class="sos-btn" style="font-size:14px;padding:10px 20px;" onclick="triggerSOS()">🚨 SOS Emergency</button>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="card" style="background:linear-gradient(135deg,rgba(239,68,68,0.1),rgba(220,38,38,0.05));border-color:rgba(239,68,68,0.2);">
+          <div style="font-size:16px;font-weight:700;margin-bottom:16px;color:var(--danger);">🚨 Emergency Dispatch</div>
+          <div class="input-group">
+            <label>Emergency Type</label>
+            <select>
+              <option>Heart Attack / Chest Pain</option>
+              <option>Accident / Trauma</option>
+              <option>Stroke</option>
+              <option>Breathing Difficulty</option>
+              <option>Maternity Emergency</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Your Location</label>
+            <input type="text" class="form-input" value="Banjara Hills, Hyderabad" placeholder="Enter your location">
+          </div>
+          <button class="btn btn-danger btn-lg" style="width:100%;" onclick="bookAmbulance()">🚑 Dispatch Ambulance NOW</button>
+        </div>
+
+        <div class="card">
+          <div style="font-size:16px;font-weight:700;margin-bottom:16px;">🗺️ Live Tracking</div>
+          <div class="tracker-map">
+            <div class="map-grid"></div>
+            <div class="ambulance-dot" style="left:25%;top:55%;"></div>
+            <div class="destination-dot"></div>
+            <div class="route-line"></div>
+            <div style="position:absolute;bottom:16px;left:16px;background:rgba(0,0,0,0.8);border-radius:8px;padding:8px 12px;font-size:13px;">
+              🚑 <strong>AMB-042</strong> • ETA: <strong style="color:var(--honey);">8 min</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card">
+          <div style="font-size:15px;font-weight:600;margin-bottom:16px;">👨‍✈️ Driver Information</div>
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+            <div class="avatar" style="background:linear-gradient(135deg,var(--honey),var(--amber));width:52px;height:52px;font-size:22px;">👨</div>
+            <div>
+              <div style="font-weight:700;">Rajesh Kumar</div>
+              <div style="font-size:12px;color:var(--text2);">ID: DRV-1847 • 6 yrs exp</div>
+              <div style="margin-top:4px;"><span class="pill pill-success">On the way</span></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-outline" style="flex:1;" onclick="showToast('Calling driver...','success')">📞 Call Driver</button>
+            <button class="btn btn-outline" style="flex:1;" onclick="showToast('Opening chat...','info')">💬 Message</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:15px;font-weight:600;margin-bottom:16px;">🏥 Assigned Hospital</div>
+          <div style="font-size:18px;font-weight:700;margin-bottom:6px;">Apollo Hospital</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:12px;">Jubilee Hills, Hyderabad</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+            <div style="text-align:center;background:rgba(34,197,94,0.1);border-radius:8px;padding:10px;"><div style="font-size:18px;font-weight:800;color:var(--success);">12</div><div style="font-size:11px;color:var(--text2);">Available Beds</div></div>
+            <div style="text-align:center;background:rgba(245,166,35,0.1);border-radius:8px;padding:10px;"><div style="font-size:18px;font-weight:800;color:var(--honey);">3</div><div style="font-size:11px;color:var(--text2);">ICU Beds</div></div>
+          </div>
+          <button class="btn btn-outline btn-sm" onclick="showToast('Getting directions...','info')">🗺️ Get Directions</button>
+        </div>
+
+        <div class="card">
+          <div style="font-size:15px;font-weight:600;margin-bottom:16px;">📱 Family Notifications</div>
+          <div class="list-item">
+            <div style="font-size:24px;">👩</div>
+            <div class="list-item-info"><div class="list-item-title">Kavitha (Mother)</div><div class="list-item-sub">+91 98765 43210</div></div>
+            <span class="pill pill-success">Notified</span>
+          </div>
+          <div class="list-item">
+            <div style="font-size:24px;">👨</div>
+            <div class="list-item-info"><div class="list-item-title">Ravi (Brother)</div><div class="list-item-sub">+91 98765 11111</div></div>
+            <span class="pill pill-success">Notified</span>
+          </div>
+          <div class="list-item">
+            <div style="font-size:24px;">👧</div>
+            <div class="list-item-info"><div class="list-item-title">Sneha (Friend)</div><div class="list-item-sub">+91 99887 76655</div></div>
+            <span class="pill pill-warning">Pending</span>
+          </div>
+          <button class="btn btn-outline btn-sm" style="margin-top:12px;width:100%;" onclick="showToast('All family members notified!','success')">+ Add Emergency Contact</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== MEDICINES ===== -->
+    <div class="inner-page" id="page-medicines">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div>
+          <div class="section-title" style="font-size:22px;">Medicine Delivery</div>
+          <div class="section-subtitle">Order medicines • Upload prescriptions • Track delivery</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="showToast('Upload prescription feature opening...','info')">📤 Upload Rx</button>
+          <button class="btn btn-honey" onclick="openModal('cartModal')" style="position:relative;">🛒 Cart <span style="background:var(--danger);color:#fff;border-radius:50%;width:18px;height:18px;font-size:10px;display:inline-flex;align-items:center;justify-content:center;margin-left:4px;" id="cartCountBadge">0</span></button>
+        </div>
+      </div>
+
+      <div class="tabs" id="medTabs">
+        <div class="tab active" onclick="switchTab('medTabs',this,'medTabContent','allMeds')">💊 All Medicines</div>
+        <div class="tab" onclick="switchTab('medTabs',this,'medTabContent','myOrders')">📦 My Orders</div>
+        <div class="tab" onclick="switchTab('medTabs',this,'medTabContent','subscription')">🔄 Subscriptions</div>
+      </div>
+
+      <div id="medTabContent">
+        <div id="tab-allMeds">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input placeholder="Search medicines, vitamins, healthcare products...">
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap;">
+            <button class="btn btn-honey btn-sm">All</button>
+            <button class="btn btn-outline btn-sm">Prescription</button>
+            <button class="btn btn-outline btn-sm">OTC</button>
+            <button class="btn btn-outline btn-sm">Vitamins</button>
+            <button class="btn btn-outline btn-sm">Devices</button>
+          </div>
+          <div class="grid-auto">
+            <div class="med-card"><div class="med-icon">💊</div><div style="flex:1;"><div class="med-name">Metformin 500mg</div><div class="med-info">Cipla • Strip of 15</div><div class="med-price">₹32.50</div></div><button class="btn btn-honey btn-sm" onclick="addToCart('Metformin 500mg','₹32.50')">+ Add</button></div>
+            <div class="med-card"><div class="med-icon">🫀</div><div style="flex:1;"><div class="med-name">Atorvastatin 10mg</div><div class="med-info">Sun Pharma • Strip of 10</div><div class="med-price">₹45.00</div></div><button class="btn btn-honey btn-sm" onclick="addToCart('Atorvastatin 10mg','₹45.00')">+ Add</button></div>
+            <div class="med-card"><div class="med-icon">🌞</div><div style="flex:1;"><div class="med-name">Vitamin D3 60K IU</div><div class="med-info">Mankind • Pack of 4</div><div class="med-price">₹110.00</div></div><button class="btn btn-honey btn-sm" onclick="addToCart('Vitamin D3','₹110.00')">+ Add</button></div>
+            <div class="med-card"><div class="med-icon">🧪</div><div style="flex:1;"><div class="med-name">Azithromycin 500mg</div><div class="med-info">Zydus • Strip of 3</div><div class="med-price">₹68.00</div></div><button class="btn btn-honey btn-sm" onclick="addToCart('Azithromycin','₹68.00')">+ Add</button></div>
+            <div class="med-card"><div class="med-icon">💉</div><div style="flex:1;"><div class="med-name">Insulin Glargine</div><div class="med-info">Sanofi • 1 vial</div><div class="med-price">₹890.00</div></div><button class="btn btn-honey btn-sm" onclick="addToCart('Insulin Glargine','₹890.00')">+ Add</button></div>
+            <div class="med-card"><div class="med-icon">🌿</div><div style="flex:1;"><div class="med-name">Ashwagandha Extract</div><div class="med-info">Himalaya • 60 caps</div><div class="med-price">₹220.00</div></div><button class="btn btn-honey btn-sm" onclick="addToCart('Ashwagandha','₹220.00')">+ Add</button></div>
+          </div>
+        </div>
+
+        <div id="tab-myOrders" style="display:none;">
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="font-size:32px;">📦</div>
+                <div>
+                  <div style="font-weight:700;">Order #HC-4821</div>
+                  <div style="font-size:13px;color:var(--text2);">Metformin, Atorvastatin • Jun 3, 2026</div>
+                  <div style="font-size:13px;margin-top:4px;">Total: <strong>₹235.50</strong></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <span class="pill pill-warning">Out for Delivery</span>
+                <div style="font-size:12px;color:var(--text2);margin-top:6px;">ETA: 25 min</div>
+                <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="showToast('Tracking order #HC-4821...','info')">Track</button>
+              </div>
+            </div>
+            <div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="font-size:32px;">✅</div>
+                <div>
+                  <div style="font-weight:700;">Order #HC-4719</div>
+                  <div style="font-size:13px;color:var(--text2);">Vitamin D3, Ashwagandha • May 28, 2026</div>
+                  <div style="font-size:13px;margin-top:4px;">Total: <strong>₹330.00</strong></div>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <span class="pill pill-success">Delivered</span>
+                <button class="btn btn-outline btn-sm" style="margin-top:8px;" onclick="addToCart('Same items','₹330.00')">Reorder</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-subscription" style="display:none;">
+          <div class="card" style="background:linear-gradient(135deg,rgba(245,166,35,0.08),transparent);border-color:rgba(245,166,35,0.2);margin-bottom:20px;">
+            <div style="font-size:18px;font-weight:700;margin-bottom:8px;">🔄 Medicine Subscription Plans</div>
+            <div style="color:var(--text2);font-size:14px;margin-bottom:16px;">Never run out of your regular medicines. Subscribe and save up to 20%.</div>
+          </div>
+          <div class="grid-2">
+            <div class="card">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+                <div style="font-weight:700;">Monthly Bundle</div>
+                <span class="pill pill-honey">Active</span>
+              </div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:8px;">Metformin 500mg × 30 tabs<br>Atorvastatin 10mg × 30 tabs<br>Vitamin D3 × 4 sachets</div>
+              <div style="font-size:20px;font-weight:800;color:var(--honey);margin-bottom:12px;">₹380 <span style="font-size:13px;color:var(--text2);text-decoration:line-through;">₹450</span></div>
+              <button class="btn btn-outline btn-sm" onclick="showToast('Managing subscription...','info')">Manage</button>
+            </div>
+            <div class="card" style="border:2px dashed var(--border2);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px;">
+              <div style="font-size:36px;margin-bottom:10px;">➕</div>
+              <div style="font-weight:600;margin-bottom:6px;">Add New Subscription</div>
+              <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Set up auto-delivery for your regular medicines</div>
+              <button class="btn btn-honey btn-sm" onclick="showToast('Setting up subscription...','info')">Subscribe</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HOSPITALS ===== -->
+    <div class="inner-page" id="page-hospitals">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div>
+          <div class="section-title" style="font-size:22px;">Hospital Network</div>
+          <div class="section-subtitle">Find, compare, and book hospital services</div>
+        </div>
+        <button class="btn btn-honey" onclick="openModal('admissionModal')">🏥 Book Admission</button>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:24px;">
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(59,130,246,0.1);">🏥</div><div class="stat-info"><div class="stat-value" style="color:#3B82F6;">284</div><div class="stat-label">Partner Hospitals</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(34,197,94,0.1);">🛏️</div><div class="stat-info"><div class="stat-value" style="color:#22C55E;">1,847</div><div class="stat-label">Available Beds</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,0.1);">🚨</div><div class="stat-info"><div class="stat-value" style="color:#EF4444;">312</div><div class="stat-label">ICU Beds</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(139,92,246,0.1);">🔪</div><div class="stat-info"><div class="stat-value" style="color:#8B5CF6;">48</div><div class="stat-label">OTs Available</div></div></div>
+      </div>
+
+      <div class="search-input-wrap">
+        <span class="search-icon">🔍</span>
+        <input placeholder="Search hospitals by name, location, or specialty...">
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <div class="card">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:40px;">🏥</div>
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                <div style="font-size:18px;font-weight:700;">Apollo Hospitals</div>
+                <div>⭐ 4.9 <span style="color:var(--text3);font-size:13px;">(2,410 reviews)</span></div>
+              </div>
+              <div style="color:var(--text2);font-size:13px;margin-bottom:10px;">📍 Jubilee Hills, Hyderabad • 3.2 km</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+                <span class="pill pill-success">✅ 12 Beds</span>
+                <span class="pill pill-warning">⚠️ 3 ICU</span>
+                <span class="pill pill-info">🔪 4 OT</span>
+                <span class="pill pill-honey">24/7 Emergency</span>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-honey btn-sm" onclick="showToast('Booking admission at Apollo...','success')">Book Admission</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Scheduling surgery at Apollo...','info')">Surgery Schedule</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Calling Apollo: 040-2360 7777','info')">📞 Call</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:40px;">🏥</div>
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                <div style="font-size:18px;font-weight:700;">KIMS Hospitals</div>
+                <div>⭐ 4.7 <span style="color:var(--text3);font-size:13px;">(1,890 reviews)</span></div>
+              </div>
+              <div style="color:var(--text2);font-size:13px;margin-bottom:10px;">📍 Secunderabad, Hyderabad • 5.8 km</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+                <span class="pill pill-success">✅ 28 Beds</span>
+                <span class="pill pill-success">✅ 8 ICU</span>
+                <span class="pill pill-info">🔪 6 OT</span>
+                <span class="pill pill-honey">Multi-specialty</span>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-honey btn-sm" onclick="showToast('Booking at KIMS...','success')">Book Admission</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Comparing hospitals...','info')">Compare</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Calling KIMS: 040-4488 5000','info')">📞 Call</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="font-size:40px;">🏥</div>
+            <div style="flex:1;">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+                <div style="font-size:18px;font-weight:700;">Yashoda Hospitals</div>
+                <div>⭐ 4.8 <span style="color:var(--text3);font-size:13px;">(3,200 reviews)</span></div>
+              </div>
+              <div style="color:var(--text2);font-size:13px;margin-bottom:10px;">📍 Somajiguda, Hyderabad • 2.1 km</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+                <span class="pill pill-danger">❌ ICU Full</span>
+                <span class="pill pill-success">✅ 15 Beds</span>
+                <span class="pill pill-info">🔪 3 OT</span>
+                <span class="pill pill-honey">Cardiac Center</span>
+              </div>
+              <div style="display:flex;gap:10px;">
+                <button class="btn btn-honey btn-sm" onclick="showToast('Booking at Yashoda...','success')">Book Admission</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Comparing hospitals...','info')">Compare</button>
+                <button class="btn btn-outline btn-sm" onclick="showToast('Calling Yashoda: 040-4567 4567','info')">📞 Call</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BLOOD DONATION ===== -->
+    <div class="inner-page" id="page-blood">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div>
+          <div class="section-title" style="font-size:22px;">Blood Donation Network</div>
+          <div class="section-subtitle">Connecting donors with those in need • Saving lives every day</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="openModal('bloodRequestModal')">🩸 Request Blood</button>
+          <button class="btn btn-honey" onclick="openModal('bloodDonorModal')">❤️ Register as Donor</button>
+        </div>
+      </div>
+
+      <div class="grid-4" style="margin-bottom:24px;">
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(239,68,68,0.1);">🩸</div><div class="stat-info"><div class="stat-value" style="color:var(--danger);">8,420</div><div class="stat-label">Registered Donors</div><div class="stat-change up">↑ 124 this week</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(245,166,35,0.1);">💉</div><div class="stat-info"><div class="stat-value gradient-text">1,284</div><div class="stat-label">Units Available</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(34,197,94,0.1);">❤️</div><div class="stat-info"><div class="stat-value" style="color:var(--success);">24,610</div><div class="stat-label">Lives Saved</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(59,130,246,0.1);">🚨</div><div class="stat-info"><div class="stat-value" style="color:#3B82F6;">12</div><div class="stat-label">Emergency Requests</div></div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div style="font-size:16px;font-weight:700;margin-bottom:16px;">🩸 Blood Availability</div>
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type">A+</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:82%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">82%</span><span class="pill pill-success">Good</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type">A-</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:45%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">45%</span><span class="pill pill-warning">Low</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type">B+</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:91%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">91%</span><span class="pill pill-success">Good</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type">B-</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:22%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">22%</span><span class="pill pill-danger">Critical</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type" style="font-size:13px;">AB+</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:66%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">66%</span><span class="pill pill-honey">OK</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type" style="font-size:13px;">AB-</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:18%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">18%</span><span class="pill pill-danger">Critical</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type">O+</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:74%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">74%</span><span class="pill pill-honey">OK</span></div>
+            <div style="display:flex;align-items:center;gap:12px;"><div class="blood-type">O-</div><div style="flex:1;"><div class="progress-bar"><div class="progress-fill" style="width:30%;background:linear-gradient(90deg,var(--danger),#DC2626);"></div></div></div><span style="font-size:13px;font-weight:600;min-width:40px;">30%</span><span class="pill pill-warning">Low</span></div>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🚨 Emergency Requests</div>
+            <div class="list-item">
+              <div class="blood-type" style="font-size:14px;">O+</div>
+              <div class="list-item-info"><div class="list-item-title">Apollo Hospital, Hyderabad</div><div class="list-item-sub">3 units needed urgently • Posted 2 hrs ago</div></div>
+              <button class="btn btn-danger btn-sm" onclick="showToast('Responding to blood request...','success')">Respond</button>
+            </div>
+            <div class="list-item">
+              <div class="blood-type" style="font-size:14px;">B-</div>
+              <div class="list-item-info"><div class="list-item-title">KIMS Hospital, Hyderabad</div><div class="list-item-sub">2 units needed • Posted 5 hrs ago</div></div>
+              <button class="btn btn-danger btn-sm" onclick="showToast('Responding to blood request...','success')">Respond</button>
+            </div>
+            <div class="list-item">
+              <div class="blood-type" style="font-size:13px;">AB-</div>
+              <div class="list-item-info"><div class="list-item-title">Yashoda Hospital, Hyderabad</div><div class="list-item-sub">1 unit needed • Posted 1 day ago</div></div>
+              <button class="btn btn-danger btn-sm" onclick="showToast('Responding to blood request...','success')">Respond</button>
+            </div>
+          </div>
+
+          <div class="card" style="background:linear-gradient(135deg,rgba(239,68,68,0.08),transparent);border-color:rgba(239,68,68,0.15);">
+            <div style="font-size:16px;font-weight:700;margin-bottom:12px;">🏆 Donor Rewards</div>
+            <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+              <div style="font-size:36px;">🥇</div>
+              <div><div style="font-weight:700;">You are a Gold Donor!</div><div style="font-size:13px;color:var(--text2);">Donated 4 times • 4 lives saved</div></div>
+            </div>
+            <div class="progress-bar" style="height:8px;margin-bottom:8px;"><div class="progress-fill" style="width:80%;background:linear-gradient(90deg,var(--honey),var(--amber));"></div></div>
+            <div style="font-size:12px;color:var(--text2);">1 more donation to reach Platinum 🏆</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== AI HEALTH ASSISTANT ===== -->
+    <div class="inner-page" id="page-ai">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div>
+          <div class="section-title" style="font-size:22px;">AI Health Assistant</div>
+          <div class="section-subtitle">Powered by HoneyCare AI • Not a substitute for professional advice</div>
+        </div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="clearChat()">🗑️ Clear Chat</button>
+          <button class="btn btn-honey" onclick="showPage('consultation')">👨‍⚕️ Talk to Doctor</button>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card" style="height:580px;display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:0;">
+            <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--honey),var(--purple));display:flex;align-items:center;justify-content:center;font-size:20px;">🤖</div>
+            <div>
+              <div style="font-weight:700;">HoneyCare AI</div>
+              <div style="font-size:12px;display:flex;align-items:center;gap:6px;color:var(--success);">
+                <div class="waveform" style="height:16px;">
+                  <div class="wave-bar" style="height:8px;animation-delay:0s;"></div>
+                  <div class="wave-bar" style="height:12px;animation-delay:0.1s;"></div>
+                  <div class="wave-bar" style="height:16px;animation-delay:0.2s;"></div>
+                  <div class="wave-bar" style="height:10px;animation-delay:0.3s;"></div>
+                  <div class="wave-bar" style="height:8px;animation-delay:0.4s;"></div>
+                </div>
+                Active
+              </div>
+            </div>
+          </div>
+          <div class="chat-container" id="chatContainer">
+            <div class="chat-msg ai">
+              <div class="chat-avatar" style="background:linear-gradient(135deg,var(--honey),var(--purple));">🤖</div>
+              <div class="chat-bubble">Hello Anusha! 👋 I'm your HoneyCare AI Health Assistant. I can help you with symptom checking, medical reports, diet plans, medication guidance, and health predictions. How can I help you today?</div>
+            </div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;padding-left:44px;">
+              <button class="btn btn-outline btn-sm" onclick="sendQuickMsg('I have a headache and fever')">🤕 Symptoms</button>
+              <button class="btn btn-outline btn-sm" onclick="sendQuickMsg('Analyze my blood report')">🔬 Report Analysis</button>
+              <button class="btn btn-outline btn-sm" onclick="sendQuickMsg('Create a diet plan for diabetes')">🥗 Diet Plan</button>
+              <button class="btn btn-outline btn-sm" onclick="sendQuickMsg('What exercises are good for heart health?')">🏃 Exercise Plan</button>
+            </div>
+          </div>
+          <div class="chat-input-wrap">
+            <input class="chat-input" id="chatInput" placeholder="Ask about symptoms, diet, medications..." onkeydown="if(event.key==='Enter')sendChat()">
+            <button class="btn btn-honey btn-icon" onclick="sendChat()">➤</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="card" style="margin-bottom:16px;">
+            <div style="font-size:16px;font-weight:700;margin-bottom:14px;">🔬 Symptom Checker</div>
+            <div class="input-group"><label>Primary Symptom</label>
+              <select id="symptomSelect"><option>Select symptom...</option><option>Headache</option><option>Fever</option><option>Chest Pain</option><option>Breathlessness</option><option>Nausea</option><option>Joint Pain</option><option>Fatigue</option><option>Dizziness</option></select>
+            </div>
+            <div class="input-group"><label>Duration</label>
+              <select><option>Less than 24 hours</option><option>1-3 days</option><option>4-7 days</option><option>More than 1 week</option></select>
+            </div>
+            <div class="input-group"><label>Severity (1-10)</label>
+              <input type="range" min="1" max="10" value="5" style="width:100%;" oninput="this.nextElementSibling.textContent=this.value">
+              <div style="text-align:right;font-size:13px;color:var(--honey);font-weight:600;">5</div>
+            </div>
+            <button class="btn btn-honey" style="width:100%;" onclick="runSymptomCheck()">🔍 Analyze Symptoms</button>
+          </div>
+
+          <div class="card">
+            <div style="font-size:16px;font-weight:700;margin-bottom:14px;">📊 Health Risk Predictions</div>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Diabetes Risk</span><span style="color:var(--warning);">Moderate (34%)</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:34%;background:linear-gradient(90deg,#F59E0B,#D97706);"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Cardiovascular Risk</span><span style="color:var(--success);">Low (12%)</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:12%;background:linear-gradient(90deg,#22C55E,#16A34A);"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Hypertension Risk</span><span style="color:var(--warning);">Moderate (28%)</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:28%;background:linear-gradient(90deg,#F59E0B,#D97706);"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Thyroid Risk</span><span style="color:var(--success);">Low (8%)</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:8%;background:linear-gradient(90deg,#22C55E,#16A34A);"></div></div>
+              </div>
+            </div>
+            <button class="btn btn-outline btn-sm" style="margin-top:14px;width:100%;" onclick="showToast('Full health risk report generating...','info')">View Full Report</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== HEALTH RECORDS ===== -->
+    <div class="inner-page" id="page-records">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Health Records Vault</div><div class="section-subtitle">Secure, encrypted health records • Access anytime</div></div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="showToast('Uploading record...','info')">📤 Upload</button>
+          <button class="btn btn-honey" onclick="showToast('Sharing records securely...','success')">🔗 Share Records</button>
+        </div>
+      </div>
+      <div class="grid-4" style="margin-bottom:24px;">
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(59,130,246,0.1);">📄</div><div class="stat-info"><div class="stat-value" style="color:#3B82F6;">24</div><div class="stat-label">Total Records</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(34,197,94,0.1);">🔬</div><div class="stat-info"><div class="stat-value" style="color:#22C55E;">8</div><div class="stat-label">Lab Reports</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(245,166,35,0.1);">📋</div><div class="stat-info"><div class="stat-value gradient-text">6</div><div class="stat-label">Prescriptions</div></div></div>
+        <div class="stat-card"><div class="stat-icon" style="background:rgba(139,92,246,0.1);">🩻</div><div class="stat-info"><div class="stat-value" style="color:#8B5CF6;">10</div><div class="stat-label">Scans & X-rays</div></div></div>
+      </div>
+      <div class="tabs" id="recTabs">
+        <div class="tab active" onclick="switchTab('recTabs',this,'recTabContent','allRec')">📁 All Records</div>
+        <div class="tab" onclick="switchTab('recTabs',this,'recTabContent','labRec')">🔬 Lab Reports</div>
+        <div class="tab" onclick="switchTab('recTabs',this,'recTabContent','scanRec')">🩻 Scans</div>
+        <div class="tab" onclick="switchTab('recTabs',this,'recTabContent','vaccRec')">💉 Vaccinations</div>
+      </div>
+      <div id="recTabContent">
+        <div id="tab-allRec">
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="record-card"><div class="record-icon" style="background:rgba(59,130,246,0.1);">🔬</div><div style="flex:1;"><div class="list-item-title">Complete Blood Count (CBC)</div><div class="list-item-sub">Apollo Diagnostics • Jun 3, 2026 • PDF • 1.2 MB</div></div><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="showToast('Viewing CBC report...','info')">View</button><button class="btn btn-honey btn-sm" onclick="showToast('Downloading CBC report...','success')">⬇️</button></div></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(245,166,35,0.1);">📋</div><div style="flex:1;"><div class="list-item-title">Prescription — Dr. Priya Sharma</div><div class="list-item-sub">Cardiology • May 18, 2026 • PDF • 0.8 MB</div></div><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="showToast('Viewing prescription...','info')">View</button><button class="btn btn-honey btn-sm" onclick="showToast('Downloading...','success')">⬇️</button></div></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(139,92,246,0.1);">🩻</div><div style="flex:1;"><div class="list-item-title">Chest X-Ray</div><div class="list-item-sub">Yashoda Radiology • Apr 15, 2026 • DICOM • 14.5 MB</div></div><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="showToast('Viewing X-ray...','info')">View</button><button class="btn btn-honey btn-sm" onclick="showToast('Downloading...','success')">⬇️</button></div></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(236,72,153,0.1);">🧠</div><div style="flex:1;"><div class="list-item-title">Brain MRI Scan</div><div class="list-item-sub">KIMS Radiology • Mar 8, 2026 • DICOM • 42.1 MB</div></div><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="showToast('Viewing MRI...','info')">View</button><button class="btn btn-honey btn-sm" onclick="showToast('Downloading...','success')">⬇️</button></div></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(34,197,94,0.1);">💉</div><div style="flex:1;"><div class="list-item-title">Vaccination Record</div><div class="list-item-sub">Primary Health Centre • Updated Feb 2026 • PDF • 0.4 MB</div></div><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="showToast('Viewing vaccination record...','info')">View</button><button class="btn btn-honey btn-sm" onclick="showToast('Downloading...','success')">⬇️</button></div></div>
+            <div class="record-card"><div class="record-icon" style="background:rgba(245,158,11,0.1);">❤️</div><div style="flex:1;"><div class="list-item-title">ECG Report</div><div class="list-item-sub">Apollo Heart Institute • Jan 12, 2026 • PDF • 2.3 MB</div></div><div style="display:flex;gap:8px;"><button class="btn btn-outline btn-sm" onclick="showToast('Viewing ECG...','info')">View</button><button class="btn btn-honey btn-sm" onclick="showToast('Downloading...','success')">⬇️</button></div></div>
+          </div>
+        </div>
+        <div id="tab-labRec" style="display:none;"><div style="padding:40px;text-align:center;color:var(--text2);">🔬 8 Lab Reports — Click "All Records" to see them all</div></div>
+        <div id="tab-scanRec" style="display:none;"><div style="padding:40px;text-align:center;color:var(--text2);">🩻 10 Scan Records — Click "All Records" to see them all</div></div>
+        <div id="tab-vaccRec" style="display:none;"><div style="padding:40px;text-align:center;color:var(--text2);">💉 Vaccination History — Fully up to date ✅</div></div>
+      </div>
+    </div>
+
+    <!-- ===== INSURANCE ===== -->
+    <div class="inner-page" id="page-insurance">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Insurance Portal</div><div class="section-subtitle">Manage policies, track coverage, file claims</div></div>
+        <button class="btn btn-honey" onclick="openModal('claimModal')">📝 File New Claim</button>
+      </div>
+      <div class="grid-2" style="margin-bottom:24px;">
+        <div class="insurance-card-visual">
+          <div class="shimmer"></div>
+          <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:4px;">HEALTH INSURANCE</div>
+          <div style="font-size:22px;font-weight:800;margin-bottom:4px;">Star Health</div>
+          <div style="font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:20px;">Comprehensive Family Floater</div>
+          <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+            <div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);">POLICY NUMBER</div>
+              <div style="font-size:16px;font-weight:700;">P-2024-SH-88421</div>
+            </div>
+            <div>
+              <div style="font-size:12px;color:rgba(255,255,255,0.5);">SUM INSURED</div>
+              <div style="font-size:20px;font-weight:800;color:var(--honey);">₹10 Lakh</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;display:flex;justify-content:space-between;">
+            <div><div style="font-size:11px;color:rgba(255,255,255,0.5);">EXPIRY</div><div style="font-weight:600;">Mar 31, 2027</div></div>
+            <div><div style="font-size:11px;color:rgba(255,255,255,0.5);">MEMBERS</div><div style="font-weight:600;">4 Members</div></div>
+            <span class="pill pill-success">Active</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:16px;font-weight:700;margin-bottom:16px;">📊 Coverage Summary</div>
+          <div style="margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Used Coverage</span><span style="color:var(--warning);">₹2.4 Lakh / ₹10 Lakh</span></div>
+            <div class="progress-bar" style="height:10px;"><div class="progress-fill" style="width:24%;background:linear-gradient(90deg,var(--warning),var(--honey));"></div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+            <div style="background:var(--surface2);border-radius:10px;padding:14px;text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--success);">₹7.6L</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Remaining</div></div>
+            <div style="background:var(--surface2);border-radius:10px;padding:14px;text-align:center;"><div style="font-size:18px;font-weight:700;color:var(--warning);">₹2.4L</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Utilized</div></div>
+          </div>
+          <div style="font-size:13px;color:var(--text2);display:flex;flex-direction:column;gap:8px;">
+            <div>✅ Hospitalization: Covered</div>
+            <div>✅ Day Care Procedures: Covered</div>
+            <div>✅ Pre-Post Hospitalization: Covered (60/90 days)</div>
+            <div>❌ Cosmetic Surgery: Not Covered</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;">📋 Claim History</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Claim ID</th><th>Date</th><th>Hospital</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>#CLM-2024-001</td><td>Feb 14, 2026</td><td>Apollo Hospital</td><td>₹85,000</td><td><span class="pill pill-success">Settled</span></td><td><button class="btn btn-outline btn-sm" onclick="showToast('Viewing claim details...','info')">View</button></td></tr>
+              <tr><td>#CLM-2025-002</td><td>Apr 8, 2026</td><td>KIMS Hospital</td><td>₹1,55,000</td><td><span class="pill pill-warning">Processing</span></td><td><button class="btn btn-outline btn-sm" onclick="showToast('Tracking claim status...','info')">Track</button></td></tr>
+              <tr><td>#CLM-2025-003</td><td>May 22, 2026</td><td>Yashoda Hospital</td><td>₹42,000</td><td><span class="pill pill-info">Submitted</span></td><td><button class="btn btn-outline btn-sm" onclick="showToast('Checking claim status...','info')">Track</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CHARITY ===== -->
+    <div class="inner-page" id="page-charity">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Charity Healthcare</div><div class="section-subtitle">Healing lives through compassion • Every rupee matters</div></div>
+        <button class="btn btn-honey" onclick="openModal('donateModal')">❤️ Donate Now</button>
+      </div>
+
+      <div style="background:linear-gradient(135deg,rgba(245,166,35,0.1),rgba(236,72,153,0.05));border:1px solid rgba(245,166,35,0.2);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:12px;">🌟</div>
+        <div style="font-size:28px;font-weight:800;margin-bottom:6px;">Together, We Heal India</div>
+        <div style="color:var(--text2);font-size:16px;max-width:600px;margin:0 auto 24px;">Your donation provides free healthcare to those who cannot afford it. 100% transparent — track every rupee.</div>
+        <div class="grid-4" style="max-width:800px;margin:0 auto;">
+          <div style="text-align:center;"><div class="impact-number">₹4.2Cr</div><div style="color:var(--text2);font-size:13px;margin-top:4px;">Raised Total</div></div>
+          <div style="text-align:center;"><div class="impact-number" style="color:#22C55E;">12,840</div><div style="color:var(--text2);font-size:13px;margin-top:4px;">Patients Helped</div></div>
+          <div style="text-align:center;"><div class="impact-number" style="color:#3B82F6;">1,248</div><div style="color:var(--text2);font-size:13px;margin-top:4px;">Surgeries Funded</div></div>
+          <div style="text-align:center;"><div class="impact-number" style="color:#EC4899;">284</div><div style="color:var(--text2);font-size:13px;margin-top:4px;">Partner NGOs</div></div>
+        </div>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="cursor:pointer;" onclick="openModal('donateModal')">
+          <div style="font-size:36px;margin-bottom:12px;">🏥</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px;">Sponsor a Patient</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Cover treatment costs for a needy patient. Get updates on their recovery.</div>
+          <div style="font-size:20px;font-weight:800;color:var(--honey);margin-bottom:12px;">₹500 – ₹50,000</div>
+          <button class="btn btn-honey" style="width:100%;">Sponsor Now</button>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="openModal('donateModal')">
+          <div style="font-size:36px;margin-bottom:12px;">💊</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px;">Donate Medicines</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Send medicines to rural health centers and tribal communities.</div>
+          <div style="font-size:20px;font-weight:800;color:var(--honey);margin-bottom:12px;">₹200 onwards</div>
+          <button class="btn btn-honey" style="width:100%;">Donate Medicines</button>
+        </div>
+        <div class="card" style="cursor:pointer;" onclick="openModal('donateModal')">
+          <div style="font-size:36px;margin-bottom:12px;">🔪</div>
+          <div style="font-size:16px;font-weight:700;margin-bottom:6px;">Fund a Surgery</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Pool with others to fund life-saving surgeries for BPL families.</div>
+          <div style="font-size:20px;font-weight:800;color:var(--honey);margin-bottom:12px;">₹1,000 – ₹2 Lakh</div>
+          <button class="btn btn-honey" style="width:100%;">Fund Surgery</button>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;">📊 Live Impact Dashboard</div>
+        <div class="grid-4">
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:var(--honey);">₹12,840</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Donated This Month</div></div>
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:var(--success);">342</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Patients This Month</div></div>
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:#3B82F6;">28</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Surgeries This Month</div></div>
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:#EC4899;">98%</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Fund Utilization</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== WOMEN & CHILD ===== -->
+    <div class="inner-page" id="page-womenchild">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Women & Child Care</div><div class="section-subtitle">Specialized care for mothers, babies, and children</div></div>
+        <button class="btn btn-honey" onclick="showPage('consultation')">👶 Book Pediatrician</button>
+      </div>
+      <div class="grid-3" style="margin-bottom:24px;">
+        <div class="card" style="background:linear-gradient(135deg,rgba(236,72,153,0.08),transparent);border-color:rgba(236,72,153,0.15);">
+          <div style="font-size:32px;margin-bottom:12px;">🤱</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:8px;">Pregnancy Tracker</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Track your pregnancy week by week, get personalized tips and milestone alerts.</div>
+          <div style="background:var(--surface2);border-radius:10px;padding:14px;margin-bottom:14px;">
+            <div style="font-size:12px;color:var(--text2);margin-bottom:4px;">CURRENT WEEK</div>
+            <div style="font-size:28px;font-weight:800;color:#EC4899;">Week 24</div>
+            <div style="font-size:13px;color:var(--text2);margin-top:4px;">Baby is the size of a corn 🌽</div>
+          </div>
+          <button class="btn btn-sm" style="background:linear-gradient(135deg,#EC4899,#DB2777);color:#fff;width:100%;" onclick="showToast('Opening Pregnancy Tracker...','info')">Track Pregnancy</button>
+        </div>
+
+        <div class="card">
+          <div style="font-size:32px;margin-bottom:12px;">💉</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:8px;">Vaccination Schedule</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Never miss a vaccination. Auto-reminders for your child's immunization schedule.</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:8px;"><div><div style="font-size:13px;font-weight:600;">MMR Vaccine</div><div style="font-size:11px;color:var(--text2);">Due: Jun 20, 2026</div></div><span class="pill pill-warning">Upcoming</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:8px;"><div><div style="font-size:13px;font-weight:600;">DPT Booster</div><div style="font-size:11px;color:var(--text2);">Due: Jul 15, 2026</div></div><span class="pill pill-info">Scheduled</span></div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px;background:var(--surface2);border-radius:8px;"><div><div style="font-size:13px;font-weight:600;">Hepatitis B</div><div style="font-size:11px;color:var(--text2);">Completed May 10</div></div><span class="pill pill-success">Done ✓</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="font-size:32px;margin-bottom:12px;">👶</div>
+          <div style="font-size:17px;font-weight:700;margin-bottom:8px;">Pediatric Care</div>
+          <div style="font-size:13px;color:var(--text2);margin-bottom:16px;">Specialized pediatric services from top child specialists.</div>
+          <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
+            <button class="btn btn-outline btn-sm" onclick="showToast('Finding pediatricians near you...','info')">🔍 Find Pediatrician</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Opening growth tracker...','info')">📊 Growth Tracker</button>
+            <button class="btn btn-outline btn-sm" onclick="showPage('ai')">🤖 AI Symptom Check</button>
+            <button class="btn btn-outline btn-sm" onclick="showToast('Opening diet planner for kids...','info')">🥗 Kids Diet Planner</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;">👶 Child Health Summary — Arjun (Son, 3 yrs)</div>
+        <div class="grid-4">
+          <div class="vital-card"><div class="vital-val" style="color:var(--honey);">14.2</div><div class="vital-unit">kg</div><div class="vital-label">Weight</div></div>
+          <div class="vital-card"><div class="vital-val" style="color:var(--success);">96</div><div class="vital-unit">cm</div><div class="vital-label">Height</div></div>
+          <div class="vital-card"><div class="vital-val" style="color:var(--info);">6/8</div><div class="vital-unit">done</div><div class="vital-label">Vaccines</div></div>
+          <div class="vital-card"><div class="vital-val" style="color:var(--purple);">A+</div><div class="vital-unit">type</div><div class="vital-label">Blood Group</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SENIOR ===== -->
+    <div class="inner-page" id="page-senior">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Senior Citizen Care</div><div class="section-subtitle">Compassionate care for our elders • Dignity & respect</div></div>
+        <button class="btn btn-honey" onclick="showToast('Booking home nursing service...','success')">🏠 Book Home Nurse</button>
+      </div>
+      <div class="grid-3">
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🏠</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Home Nursing</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Qualified nurses visit your home for post-operative care, wound dressing, IV therapy, and more.</div><button class="btn btn-honey btn-sm" style="width:100%;" onclick="showToast('Booking home nurse...','success')">Book Nurse</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">⏰</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Medicine Reminders</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Smart reminders via SMS, call, and app notifications. Never miss a dose.</div><button class="btn btn-honey btn-sm" style="width:100%;" onclick="showToast('Setting up medicine reminders...','info')">Setup Reminders</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🚨</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Emergency Monitoring</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">24/7 health monitoring with fall detection and emergency alerts to family.</div><button class="btn btn-honey btn-sm" style="width:100%;" onclick="showToast('Activating emergency monitoring...','success')">Activate</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🩺</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Regular Health Checkups</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Scheduled health monitoring visits at home. Blood pressure, glucose, ECG.</div><button class="btn btn-honey btn-sm" style="width:100%;" onclick="showToast('Scheduling checkup...','info')">Schedule</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🤝</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Companion Services</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Trained caregivers to provide companionship, assistance with daily activities.</div><button class="btn btn-honey btn-sm" style="width:100%;" onclick="showToast('Finding companion service...','info')">Find Companion</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🏥</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Physiotherapy</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">At-home physiotherapy sessions for mobility, post-surgery recovery.</div><button class="btn btn-honey btn-sm" style="width:100%;" onclick="showToast('Booking physiotherapy...','info')">Book Session</button></div>
+      </div>
+    </div>
+
+    <!-- ===== MENTAL HEALTH ===== -->
+    <div class="inner-page" id="page-mental">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Mental Health & Wellness</div><div class="section-subtitle">Your mind matters • Safe, confidential, compassionate</div></div>
+        <button class="btn btn-honey" onclick="openModal('therapyModal')">🧠 Book Therapy</button>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(139,92,246,0.1),rgba(59,130,246,0.05));border:1px solid rgba(139,92,246,0.2);border-radius:var(--radius-lg);padding:28px;margin-bottom:24px;">
+        <div style="font-size:20px;font-weight:700;margin-bottom:8px;">💜 You Are Not Alone</div>
+        <div style="color:var(--text2);max-width:600px;">Mental health is as important as physical health. HoneyCare provides confidential, judgment-free support with licensed therapists and counselors.</div>
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="btn btn-sm" style="background:#8B5CF6;color:#fff;" onclick="openModal('therapyModal')">Book Therapy Session</button>
+          <button class="btn btn-outline btn-sm" onclick="showToast('Opening crisis support hotline: 1800-599-0019','info')">🆘 Crisis Helpline</button>
+          <button class="btn btn-outline btn-sm" onclick="showPage('ai')">🤖 Talk to AI</button>
+        </div>
+      </div>
+      <div class="grid-3" style="margin-bottom:24px;">
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">💬</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Counseling</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Talk to a certified counselor about stress, anxiety, relationships, or work pressure.</div><button class="btn btn-sm" style="background:#8B5CF6;color:#fff;width:100%;" onclick="openModal('therapyModal')">Book Session</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🎯</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">CBT Therapy</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Cognitive Behavioral Therapy for depression, OCD, phobias, and anxiety disorders.</div><button class="btn btn-sm" style="background:#8B5CF6;color:#fff;width:100%;" onclick="openModal('therapyModal')">Book Session</button></div>
+        <div class="card"><div style="font-size:32px;margin-bottom:12px;">🌸</div><div style="font-size:17px;font-weight:700;margin-bottom:8px;">Wellness Programs</div><div style="font-size:13px;color:var(--text2);margin-bottom:14px;">Mindfulness, meditation, yoga, and stress management programs.</div><button class="btn btn-sm" style="background:#8B5CF6;color:#fff;width:100%;" onclick="showToast('Joining wellness program...','success')">Join Program</button></div>
+      </div>
+      <div class="card">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;">🌟 Top Therapists</div>
+        <div class="grid-3">
+          <div class="doctor-card"><div class="doctor-avatar" style="background:rgba(139,92,246,0.1);">👩‍⚕️</div><div class="doctor-name">Dr. Kavitha Nair</div><div class="doctor-spec" style="color:#8B5CF6;">Clinical Psychologist</div><div class="doctor-meta"><span>⭐ 4.9</span><span>•</span><span>10 yrs</span></div><button class="btn btn-sm" style="background:#8B5CF6;color:#fff;width:100%;margin-top:12px;" onclick="openModal('therapyModal')">Book</button></div>
+          <div class="doctor-card"><div class="doctor-avatar" style="background:rgba(59,130,246,0.1);">👨‍⚕️</div><div class="doctor-name">Dr. Arjun Patel</div><div class="doctor-spec" style="color:#3B82F6;">Psychiatrist</div><div class="doctor-meta"><span>⭐ 4.8</span><span>•</span><span>14 yrs</span></div><button class="btn btn-sm" style="background:#8B5CF6;color:#fff;width:100%;margin-top:12px;" onclick="openModal('therapyModal')">Book</button></div>
+          <div class="doctor-card"><div class="doctor-avatar" style="background:rgba(236,72,153,0.1);">👩‍⚕️</div><div class="doctor-name">Dr. Rina Desai</div><div class="doctor-spec" style="color:#EC4899;">Counselor</div><div class="doctor-meta"><span>⭐ 4.7</span><span>•</span><span>7 yrs</span></div><button class="btn btn-sm" style="background:#8B5CF6;color:#fff;width:100%;margin-top:12px;" onclick="openModal('therapyModal')">Book</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ORGAN DONATION ===== -->
+    <div class="inner-page" id="page-organ">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">Organ Donation Network</div><div class="section-subtitle">Be a hero • One donor can save up to 8 lives</div></div>
+        <button class="btn btn-honey" onclick="openModal('organModal')">💝 Register as Donor</button>
+      </div>
+      <div style="background:linear-gradient(135deg,rgba(236,72,153,0.1),rgba(245,166,35,0.05));border:1px solid rgba(236,72,153,0.2);border-radius:var(--radius-lg);padding:32px;margin-bottom:24px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:12px;">💝</div>
+        <div style="font-size:26px;font-weight:800;margin-bottom:8px;">Your Gift of Life</div>
+        <div style="color:var(--text2);max-width:500px;margin:0 auto 20px;">Organ donation is the greatest act of kindness. Register today and give someone a second chance at life.</div>
+        <div class="grid-4" style="max-width:700px;margin:0 auto;">
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:#EC4899;">28,400</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Registered Donors</div></div>
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:var(--honey);">1,284</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Transplants Done</div></div>
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:var(--success);">9,420</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Waiting Recipients</div></div>
+          <div class="organ-stat"><div style="font-size:24px;font-weight:800;color:#3B82F6;">84%</div><div style="font-size:12px;color:var(--text2);margin-top:4px;">Match Success Rate</div></div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <div style="font-size:16px;font-weight:700;margin-bottom:16px;">🫀 Organs You Can Donate</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+            <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px;"><div style="font-size:28px;margin-bottom:6px;">🫀</div><div style="font-size:12px;font-weight:600;">Heart</div></div>
+            <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px;"><div style="font-size:28px;margin-bottom:6px;">🫁</div><div style="font-size:12px;font-weight:600;">Lungs</div></div>
+            <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px;"><div style="font-size:28px;margin-bottom:6px;">🧬</div><div style="font-size:12px;font-weight:600;">Kidneys</div></div>
+            <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px;"><div style="font-size:28px;margin-bottom:6px;">🫙</div><div style="font-size:12px;font-weight:600;">Liver</div></div>
+            <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px;"><div style="font-size:28px;margin-bottom:6px;">👁️</div><div style="font-size:12px;font-weight:600;">Corneas</div></div>
+            <div style="text-align:center;background:var(--surface2);border-radius:10px;padding:14px;"><div style="font-size:28px;margin-bottom:6px;">🦴</div><div style="font-size:12px;font-weight:600;">Bones</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div style="font-size:16px;font-weight:700;margin-bottom:16px;">⏳ Urgent Waiting List</div>
+          <div class="list-item">
+            <div style="font-size:24px;">🫀</div>
+            <div class="list-item-info"><div class="list-item-title">Heart — Patient #4821</div><div class="list-item-sub">Age 34 • AB+ • Waiting 8 months • Critical</div></div>
+            <span class="pill pill-danger">URGENT</span>
+          </div>
+          <div class="list-item">
+            <div style="font-size:24px;">🫁</div>
+            <div class="list-item-info"><div class="list-item-title">Lungs — Patient #3192</div><div class="list-item-sub">Age 52 • O+ • Waiting 14 months</div></div>
+            <span class="pill pill-warning">High</span>
+          </div>
+          <div class="list-item">
+            <div style="font-size:24px;">🧬</div>
+            <div class="list-item-info"><div class="list-item-title">Kidney — Patient #7234</div><div class="list-item-sub">Age 28 • B+ • Waiting 6 months</div></div>
+            <span class="pill pill-warning">High</span>
+          </div>
+          <div class="list-item">
+            <div style="font-size:24px;">👁️</div>
+            <div class="list-item-info"><div class="list-item-title">Corneas — Patient #5512</div><div class="list-item-sub">Age 16 • Any type • Waiting 2 months</div></div>
+            <span class="pill pill-honey">Moderate</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== ADMIN ===== -->
+    <div class="inner-page" id="page-admin">
+      <div class="section-header" style="margin-bottom:24px;">
+        <div><div class="section-title" style="font-size:22px;">⚙️ Admin Command Center</div><div class="section-subtitle">HoneyCare Operations Dashboard • Real-time Analytics</div></div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-outline" onclick="showToast('Exporting analytics report...','info')">📊 Export Report</button>
+          <button class="btn btn-honey" onclick="showToast('System health: All systems operational ✅','success')">🔍 System Health</button>
+        </div>
+      </div>
+
+      <div class="grid-4 stagger" style="margin-bottom:24px;">
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(245,166,35,0.1);">👥</div><div class="stat-info"><div class="stat-value gradient-text">2,84,120</div><div class="stat-label">Total Patients</div><div class="stat-change up">↑ 1,284 this week</div></div></div>
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(34,197,94,0.1);">👨‍⚕️</div><div class="stat-info"><div class="stat-value" style="color:#22C55E;">2,418</div><div class="stat-label">Active Doctors</div><div class="stat-change up">↑ 12 new</div></div></div>
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(59,130,246,0.1);">🏥</div><div class="stat-info"><div class="stat-value" style="color:#3B82F6;">284</div><div class="stat-label">Partner Hospitals</div><div class="stat-change up">↑ 3 new</div></div></div>
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(239,68,68,0.1);">🚑</div><div class="stat-info"><div class="stat-value" style="color:#EF4444;">148</div><div class="stat-label">Active Ambulances</div><div class="stat-change up">↑ All operational</div></div></div>
+      </div>
+
+      <div class="grid-4 stagger" style="margin-bottom:24px;">
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(236,72,153,0.1);">❤️</div><div class="stat-info"><div class="stat-value" style="color:#EC4899;">₹4.2Cr</div><div class="stat-label">Donations Received</div><div class="stat-change up">↑ ₹12L this month</div></div></div>
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(139,92,246,0.1);">🌟</div><div class="stat-info"><div class="stat-value" style="color:#8B5CF6;">12,840</div><div class="stat-label">Lives Impacted</div><div class="stat-change up">↑ Through charity</div></div></div>
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(20,184,166,0.1);">💊</div><div class="stat-info"><div class="stat-value" style="color:#14B8A6;">84,210</div><div class="stat-label">Orders Delivered</div><div class="stat-change up">↑ 99.2% success rate</div></div></div>
+        <div class="stat-card fade-up"><div class="stat-icon" style="background:rgba(245,158,11,0.1);">⭐</div><div class="stat-info"><div class="stat-value gradient-text">4.8/5</div><div class="stat-label">Avg Platform Rating</div><div class="stat-change up">↑ Excellent</div></div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="section-header"><div class="section-title">📈 Patient Growth (2026)</div></div>
+          <div style="display:flex;align-items:flex-end;gap:8px;height:120px;margin-bottom:8px;">
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="flex:1;width:100%;background:linear-gradient(to top,rgba(245,166,35,0.6),rgba(245,166,35,0.1));border-radius:4px 4px 0 0;" data-height="60"></div>
+              <div style="font-size:10px;color:var(--text3);">Jan</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="flex:1;width:100%;background:linear-gradient(to top,rgba(245,166,35,0.7),rgba(245,166,35,0.2));border-radius:4px 4px 0 0;" data-height="70"></div>
+              <div style="font-size:10px;color:var(--text3);">Feb</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="flex:1;width:100%;background:linear-gradient(to top,rgba(245,166,35,0.65),rgba(245,166,35,0.15));border-radius:4px 4px 0 0;"></div>
+              <div style="font-size:10px;color:var(--text3);">Mar</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="flex:1;width:100%;background:linear-gradient(to top,rgba(245,166,35,0.8),rgba(245,166,35,0.3));border-radius:4px 4px 0 0;"></div>
+              <div style="font-size:10px;color:var(--text3);">Apr</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="flex:1;width:100%;background:linear-gradient(to top,rgba(245,166,35,0.75),rgba(245,166,35,0.25));border-radius:4px 4px 0 0;"></div>
+              <div style="font-size:10px;color:var(--text3);">May</div>
+            </div>
+            <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;">
+              <div style="flex:1;width:100%;background:linear-gradient(to top,var(--honey),rgba(245,166,35,0.4));border-radius:4px 4px 0 0;"></div>
+              <div style="font-size:10px;color:var(--text3);">Jun</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--text2);text-align:center;">Monthly patient registrations • Growing 18% MoM</div>
+        </div>
+
+        <div class="card">
+          <div class="section-header"><div class="section-title">🗺️ Service Coverage</div></div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Telemedicine</span><span style="color:var(--honey);">2,418 doctors • 28 states</span></div><div class="progress-bar"><div class="progress-fill" style="width:88%;background:linear-gradient(90deg,var(--honey),var(--amber));"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Medicine Delivery</span><span style="color:var(--success);">420 cities covered</span></div><div class="progress-bar"><div class="progress-fill" style="width:72%;background:linear-gradient(90deg,#22C55E,#16A34A);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Ambulance Network</span><span style="color:var(--info);">148 vehicles • 12 cities</span></div><div class="progress-bar"><div class="progress-fill" style="width:48%;background:linear-gradient(90deg,#3B82F6,#2563EB);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Blood Banks</span><span style="color:var(--danger);">284 centers</span></div><div class="progress-bar"><div class="progress-fill" style="width:64%;background:linear-gradient(90deg,#EF4444,#DC2626);"></div></div></div>
+            <div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px;"><span>Hospital Network</span><span style="color:var(--purple);">284 hospitals</span></div><div class="progress-bar"><div class="progress-fill" style="width:56%;background:linear-gradient(90deg,#8B5CF6,#7C3AED);"></div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div style="font-size:16px;font-weight:700;margin-bottom:16px;">📋 Recent System Activity</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Time</th><th>Event</th><th>Module</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>2 min ago</td><td>New patient registered: Rajesh Kumar</td><td>Dashboard</td><td><span class="pill pill-success">Success</span></td></tr>
+              <tr><td>5 min ago</td><td>Ambulance dispatched to Banjara Hills</td><td>Ambulance</td><td><span class="pill pill-warning">In Progress</span></td></tr>
+              <tr><td>8 min ago</td><td>Blood request fulfilled: O+ at Apollo</td><td>Blood Bank</td><td><span class="pill pill-success">Success</span></td></tr>
+              <tr><td>12 min ago</td><td>Medicine order #HC-4821 delivered</td><td>Pharmacy</td><td><span class="pill pill-success">Success</span></td></tr>
+              <tr><td>18 min ago</td><td>Charity donation: ₹5,000 by Anon</td><td>Charity</td><td><span class="pill pill-success">Received</span></td></tr>
+              <tr><td>24 min ago</td><td>Insurance claim #CLM-2025-003 submitted</td><td>Insurance</td><td><span class="pill pill-info">Processing</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end main content -->
+</div><!-- end app shell -->
+
+<!-- ===== MODALS ===== -->
+
+<!-- Book Appointment Modal -->
+<div class="modal-overlay" id="bookApptModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">📅 Book Appointment</div><button class="modal-close" onclick="closeModal('bookApptModal')">✕</button></div>
+    <div class="input-group"><label>Select Doctor</label><select><option>Dr. Priya Sharma — Cardiologist</option><option>Dr. Rahul Mehta — Neurologist</option><option>Dr. Anjali Singh — GP</option></select></div>
+    <div class="input-group"><label>Consultation Type</label><select><option>Video Consultation</option><option>Audio Consultation</option><option>Chat Consultation</option><option>In-Person</option></select></div>
+    <div class="input-group"><label>Preferred Date</label><input type="date" class="form-input" value="2026-06-10"></div>
+    <div class="input-group"><label>Preferred Time</label><select><option>9:00 AM</option><option>11:00 AM</option><option>2:00 PM</option><option>4:00 PM</option><option>6:00 PM</option></select></div>
+    <div class="input-group"><label>Reason for Visit</label><textarea class="form-input" rows="3" placeholder="Briefly describe your symptoms or reason..."></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:4px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('bookApptModal')">Cancel</button>
+      <button class="btn btn-honey" style="flex:1;" onclick="confirmBooking()">Confirm Booking</button>
+    </div>
+  </div>
+</div>
+
+<!-- Consult Modal -->
+<div class="modal-overlay" id="consultModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title" id="consultModalTitle">Book Consultation</div><button class="modal-close" onclick="closeModal('consultModal')">✕</button></div>
+    <div id="consultModalBody">
+      <div class="steps" style="margin-bottom:24px;">
+        <div class="step active"><div class="step-num">1</div><div class="step-label">Type</div></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">2</div><div class="step-label">Schedule</div></div>
+        <div class="step-line"></div>
+        <div class="step"><div class="step-num">3</div><div class="step-label">Confirm</div></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-bottom:16px;">
+        <div style="flex:1;padding:16px;border:2px solid var(--honey);border-radius:10px;text-align:center;cursor:pointer;background:rgba(245,166,35,0.08);" onclick="showToast('Video consultation selected','success')"><div style="font-size:28px;margin-bottom:6px;">📹</div><div style="font-size:13px;font-weight:600;">Video Call</div><div style="font-size:11px;color:var(--text2);">₹299</div></div>
+        <div style="flex:1;padding:16px;border:1px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;" onclick="showToast('Audio consultation selected','success')"><div style="font-size:28px;margin-bottom:6px;">📞</div><div style="font-size:13px;font-weight:600;">Audio Call</div><div style="font-size:11px;color:var(--text2);">₹199</div></div>
+        <div style="flex:1;padding:16px;border:1px solid var(--border);border-radius:10px;text-align:center;cursor:pointer;" onclick="showToast('Chat consultation selected','success')"><div style="font-size:28px;margin-bottom:6px;">💬</div><div style="font-size:13px;font-weight:600;">Chat</div><div style="font-size:11px;color:var(--text2);">₹149</div></div>
+      </div>
+      <div class="input-group"><label>Select Date</label><input type="date" class="form-input" value="2026-06-10"></div>
+      <div class="input-group"><label>Select Time</label><select><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>2:00 PM</option><option>4:00 PM</option></select></div>
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button class="btn btn-outline" style="flex:1;" onclick="closeModal('consultModal')">Cancel</button>
+        <button class="btn btn-honey" style="flex:1;" onclick="confirmBooking()">Pay & Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Modal -->
+<div class="modal-overlay" id="cartModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">🛒 Your Cart</div><button class="modal-close" onclick="closeModal('cartModal')">✕</button></div>
+    <div id="cartItems" style="min-height:80px;margin-bottom:16px;"></div>
+    <div style="border-top:1px solid var(--border);padding-top:16px;margin-top:8px;">
+      <div style="display:flex;justify-content:space-between;font-size:15px;margin-bottom:6px;"><span>Subtotal</span><span id="cartSubtotal">₹0.00</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;color:var(--success);margin-bottom:6px;"><span>Delivery</span><span>FREE</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:18px;font-weight:800;margin-bottom:16px;"><span>Total</span><span style="color:var(--honey);" id="cartTotal">₹0.00</span></div>
+      <button class="btn btn-honey" style="width:100%;" onclick="checkoutCart()">Proceed to Checkout →</button>
+    </div>
+  </div>
+</div>
+
+<!-- Blood Request Modal -->
+<div class="modal-overlay" id="bloodRequestModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">🩸 Request Blood</div><button class="modal-close" onclick="closeModal('bloodRequestModal')">✕</button></div>
+    <div class="input-group"><label>Blood Group Required</label><select><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+    <div class="input-group"><label>Units Required</label><input type="number" class="form-input" value="2" min="1" max="10"></div>
+    <div class="input-group"><label>Hospital Name</label><input type="text" class="form-input" placeholder="Name of the hospital..."></div>
+    <div class="input-group"><label>Urgency Level</label><select><option>Emergency (Within hours)</option><option>Urgent (Within 24 hrs)</option><option>Routine (Within 3 days)</option></select></div>
+    <div class="input-group"><label>Contact Number</label><input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX"></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('bloodRequestModal')">Cancel</button>
+      <button class="btn btn-danger" style="flex:1;" onclick="closeModal('bloodRequestModal');showToast('🩸 Blood request submitted! Matching donors...','success')">Submit Request</button>
+    </div>
+  </div>
+</div>
+
+<!-- Blood Donor Modal -->
+<div class="modal-overlay" id="bloodDonorModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">❤️ Register as Blood Donor</div><button class="modal-close" onclick="closeModal('bloodDonorModal')">✕</button></div>
+    <div class="input-group"><label>Full Name</label><input type="text" class="form-input" placeholder="Your name..."></div>
+    <div class="input-group"><label>Blood Group</label><select><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+    <div class="input-group"><label>Phone Number</label><input type="tel" class="form-input" placeholder="+91 XXXXX XXXXX"></div>
+    <div class="input-group"><label>City</label><input type="text" class="form-input" placeholder="Your city..."></div>
+    <div class="input-group"><label>Available for Emergency Donation?</label><select><option>Yes, available 24/7</option><option>Yes, with 2-4 hrs notice</option><option>Weekends only</option></select></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('bloodDonorModal')">Cancel</button>
+      <button class="btn btn-honey" style="flex:1;" onclick="closeModal('bloodDonorModal');showToast('❤️ You are now a registered blood donor! Thank you!','success')">Register</button>
+    </div>
+  </div>
+</div>
+
+<!-- Admission Modal -->
+<div class="modal-overlay" id="admissionModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">🏥 Book Hospital Admission</div><button class="modal-close" onclick="closeModal('admissionModal')">✕</button></div>
+    <div class="input-group"><label>Hospital</label><select><option>Apollo Hospitals, Jubilee Hills</option><option>KIMS Hospitals, Secunderabad</option><option>Yashoda Hospitals, Somajiguda</option></select></div>
+    <div class="input-group"><label>Ward Type</label><select><option>General Ward (₹1,500/day)</option><option>Semi-Private (₹3,000/day)</option><option>Private Room (₹5,000/day)</option><option>ICU (₹12,000/day)</option></select></div>
+    <div class="input-group"><label>Admission Date</label><input type="date" class="form-input" value="2026-06-10"></div>
+    <div class="input-group"><label>Reason for Admission</label><textarea class="form-input" rows="2" placeholder="Describe the medical condition..."></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('admissionModal')">Cancel</button>
+      <button class="btn btn-honey" style="flex:1;" onclick="closeModal('admissionModal');showToast('🏥 Admission booked! You will receive confirmation shortly.','success')">Book Admission</button>
+    </div>
+  </div>
+</div>
+
+<!-- Claim Modal -->
+<div class="modal-overlay" id="claimModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">📝 File Insurance Claim</div><button class="modal-close" onclick="closeModal('claimModal')">✕</button></div>
+    <div class="input-group"><label>Policy Number</label><input type="text" class="form-input" value="P-2024-SH-88421" readonly></div>
+    <div class="input-group"><label>Hospital</label><input type="text" class="form-input" placeholder="Hospital name..."></div>
+    <div class="input-group"><label>Admission Date</label><input type="date" class="form-input"></div>
+    <div class="input-group"><label>Discharge Date</label><input type="date" class="form-input"></div>
+    <div class="input-group"><label>Claim Amount (₹)</label><input type="number" class="form-input" placeholder="Enter amount..."></div>
+    <div class="input-group"><label>Diagnosis</label><textarea class="form-input" rows="2" placeholder="Medical diagnosis..."></textarea></div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('claimModal')">Cancel</button>
+      <button class="btn btn-honey" style="flex:1;" onclick="closeModal('claimModal');showToast('📝 Insurance claim filed! Processing in 3-5 business days.','success')">File Claim</button>
+    </div>
+  </div>
+</div>
+
+<!-- Donate Modal -->
+<div class="modal-overlay" id="donateModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">❤️ Make a Donation</div><button class="modal-close" onclick="closeModal('donateModal')">✕</button></div>
+    <div class="input-group"><label>Donation Type</label><select><option>Sponsor a Patient</option><option>Donate Medicines</option><option>Fund a Surgery</option><option>Donate Equipment</option><option>General Fund</option></select></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+      <button class="btn btn-outline btn-sm" onclick="setDonateAmt('₹200')">₹200</button>
+      <button class="btn btn-outline btn-sm" onclick="setDonateAmt('₹500')">₹500</button>
+      <button class="btn btn-outline btn-sm" onclick="setDonateAmt('₹1,000')">₹1,000</button>
+      <button class="btn btn-outline btn-sm" onclick="setDonateAmt('₹5,000')">₹5,000</button>
+      <button class="btn btn-outline btn-sm" onclick="setDonateAmt('₹10,000')">₹10,000</button>
+    </div>
+    <div class="input-group"><label>Amount (₹)</label><input type="number" class="form-input" id="donateAmtInput" placeholder="Or enter custom amount..."></div>
+    <div class="input-group"><label>Payment Method</label><select><option>UPI</option><option>Credit / Debit Card</option><option>Net Banking</option><option>Paytm / PhonePe</option></select></div>
+    <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:12px;font-size:13px;color:var(--success);margin-bottom:16px;">✅ 80G Tax Exemption • 100% Transparent • Every rupee tracked</div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('donateModal')">Cancel</button>
+      <button class="btn btn-honey" style="flex:1;" onclick="closeModal('donateModal');showToast('❤️ Thank you for your generous donation! Lives will be changed.','success')">Donate Now ❤️</button>
+    </div>
+  </div>
+</div>
+
+<!-- Therapy Modal -->
+<div class="modal-overlay" id="therapyModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">🧠 Book Therapy Session</div><button class="modal-close" onclick="closeModal('therapyModal')">✕</button></div>
+    <div class="input-group"><label>Therapist</label><select><option>Dr. Kavitha Nair — Clinical Psychologist</option><option>Dr. Arjun Patel — Psychiatrist</option><option>Dr. Rina Desai — Counselor</option></select></div>
+    <div class="input-group"><label>Session Type</label><select><option>Video Session (₹499)</option><option>Audio Session (₹349)</option><option>Chat Session (₹249)</option></select></div>
+    <div class="input-group"><label>Preferred Date</label><input type="date" class="form-input" value="2026-06-12"></div>
+    <div class="input-group"><label>What brings you here? (Confidential)</label><textarea class="form-input" rows="3" placeholder="This is completely confidential..."></textarea></div>
+    <div style="background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.15);border-radius:10px;padding:12px;font-size:13px;color:#8B5CF6;margin-bottom:16px;">🔒 100% Confidential • Certified Therapists • Safe Space</div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('therapyModal')">Cancel</button>
+      <button class="btn btn-sm" style="flex:1;background:#8B5CF6;color:#fff;" onclick="closeModal('therapyModal');showToast('🧠 Therapy session booked! You are taking a brave step.','success')">Book Session</button>
+    </div>
+  </div>
+</div>
+
+<!-- Organ Modal -->
+<div class="modal-overlay" id="organModal">
+  <div class="modal">
+    <div class="modal-header"><div class="modal-title">💝 Register as Organ Donor</div><button class="modal-close" onclick="closeModal('organModal')">✕</button></div>
+    <div class="input-group"><label>Full Name</label><input type="text" class="form-input" placeholder="Your full name..."></div>
+    <div class="input-group"><label>Blood Group</label><select><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div>
+    <div class="input-group"><label>Organs to Donate</label><select multiple style="height:120px;"><option>Heart</option><option>Lungs</option><option>Kidneys (both)</option><option>Liver</option><option>Corneas</option><option>Bones & Tissue</option><option>Skin</option></select></div>
+    <div style="font-size:12px;color:var(--text2);margin-bottom:16px;">Hold Ctrl/Cmd to select multiple organs</div>
+    <div style="background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.15);border-radius:10px;padding:12px;font-size:13px;color:#EC4899;margin-bottom:16px;">💝 One donor can save up to 8 lives. You are a true hero.</div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-outline" style="flex:1;" onclick="closeModal('organModal')">Cancel</button>
+      <button class="btn btn-honey" style="flex:1;" onclick="closeModal('organModal');showToast('💝 Thank you! You are registered as an organ donor. Your pledge is heroic.','success')">Register Pledge</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Floating SOS -->
+<button class="floating-sos" onclick="triggerSOS()" title="Emergency SOS">🚨</button>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="bottom-nav" id="bottomNav">
+  <div class="bn-item active" id="bn-dashboard" onclick="showPage('dashboard');setBottomNav('dashboard')">
+    <span class="bn-icon">🏠</span><span>Home</span>
+  </div>
+  <div class="bn-item" id="bn-consultation" onclick="showPage('consultation');setBottomNav('consultation')">
+    <span class="bn-icon">👨‍⚕️</span><span>Doctors</span>
+  </div>
+  <div class="bn-item" id="bn-ambulance" onclick="showPage('ambulance');setBottomNav('ambulance')">
+    <span class="bn-icon">🚑</span><span>SOS</span>
+  </div>
+  <div class="bn-item" id="bn-medicines" onclick="showPage('medicines');setBottomNav('medicines')">
+    <span class="bn-icon">💊</span><span>Pharmacy</span>
+  </div>
+  <div class="bn-item" id="bn-more" onclick="toggleSidebar()">
+    <span class="bn-icon">☰</span><span>More</span>
+  </div>
+</nav>
+
+<script>
+// ===== STATE =====
+let cart = [];
+let cartTotal = 0;
+let aiHistory = [];
+
+// ===== AUTH =====
+function enterApp(greeting) {
+  document.getElementById('loginPage').classList.remove('active');
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('appShell').classList.add('active');
+  document.getElementById('appShell').style.display = 'flex';
+  showToast(greeting, 'success');
+}
+
+function doLogin() {
+  const user = document.getElementById('loginUser').value.trim();
+  const pass = document.getElementById('loginPass').value.trim();
+  if (user === 'anusha' && pass === '0501') {
+    sessionStorage.setItem('hc_logged_in', '1');
+    enterApp('👋 Welcome back, Anusha!');
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    setTimeout(() => document.getElementById('loginError').style.display = 'none', 3000);
+  }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('loginPage').style.display !== 'none') doLogin();
+});
+
+function doLogout() {
+  sessionStorage.removeItem('hc_logged_in');
+  document.getElementById('appShell').classList.remove('active');
+  document.getElementById('appShell').style.display = 'none';
+  document.getElementById('loginPage').style.display = 'flex';
+  document.getElementById('loginPage').classList.add('active');
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  showToast('Logged out successfully', 'info');
+}
+
+// Auto-login if already signed in this session
+if (sessionStorage.getItem('hc_logged_in') === '1') {
+  document.getElementById('loginPage').style.display = 'none';
+  document.getElementById('loginPage').classList.remove('active');
+  document.getElementById('appShell').style.display = 'flex';
+  document.getElementById('appShell').classList.add('active');
+}
+
+// ===== BOTTOM NAV =====
+function setBottomNav(pageId) {
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('bn-' + pageId);
+  if (target) target.classList.add('active');
+}
+
+// ===== NAVIGATION =====
+const pageTitles = {
+  dashboard: ['Dashboard', 'HoneyCare / Home'],
+  consultation: ['Doctor Consultation', 'HoneyCare / Consultation'],
+  ambulance: ['Ambulance Services', 'HoneyCare / Ambulance'],
+  medicines: ['Medicine Delivery', 'HoneyCare / Pharmacy'],
+  hospitals: ['Hospital Network', 'HoneyCare / Hospitals'],
+  blood: ['Blood Donation Network', 'HoneyCare / Blood Bank'],
+  ai: ['AI Health Assistant', 'HoneyCare / AI'],
+  records: ['Health Records Vault', 'HoneyCare / Records'],
+  insurance: ['Insurance Portal', 'HoneyCare / Insurance'],
+  charity: ['Charity Healthcare', 'HoneyCare / Charity'],
+  womenchild: ['Women & Child Care', 'HoneyCare / Women & Child'],
+  senior: ['Senior Citizen Care', 'HoneyCare / Senior Care'],
+  mental: ['Mental Health & Wellness', 'HoneyCare / Mental Health'],
+  organ: ['Organ Donation Network', 'HoneyCare / Organ Donation'],
+  admin: ['Admin Command Center', 'HoneyCare / Admin'],
+};
+
+function showPage(pageId) {
+  // Hide all inner pages
+  document.querySelectorAll('.inner-page').forEach(p => p.classList.remove('active'));
+  // Show target
+  const target = document.getElementById('page-' + pageId);
+  if (target) target.classList.add('active');
+  // Update nav
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + pageId + "'")) n.classList.add('active');
+  });
+  // Update topbar
+  if (pageTitles[pageId]) {
+    document.getElementById('topbarTitle').textContent = pageTitles[pageId][0];
+    document.getElementById('topbarBread').textContent = pageTitles[pageId][1];
+  }
+  // Close sidebar on mobile
+  closeSidebar();
+  // Sync bottom nav
+  setBottomNav(pageId);
+  // Close notif panel
+  document.getElementById('notifPanel').classList.remove('open');
+  window.scrollTo(0, 0);
+}
+
+// ===== TABS =====
+function switchTab(tabGroupId, clickedTab, contentId, tabName) {
+  // Update tab styles
+  document.querySelectorAll('#' + tabGroupId + ' .tab').forEach(t => t.classList.remove('active'));
+  clickedTab.classList.add('active');
+  // Show content
+  const content = document.getElementById(contentId);
+  if (content) {
+    content.querySelectorAll(':scope > div').forEach(d => d.style.display = 'none');
+    const target = content.querySelector('#tab-' + tabName);
+    if (target) target.style.display = 'block';
+  }
+}
+
+// ===== SIDEBAR MOBILE =====
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('sidebarOverlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('show');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('show');
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('themeIcon').textContent = isDark ? '🌙' : '☀️';
+}
+
+// ===== NOTIFICATIONS =====
+function toggleNotifications() {
+  document.getElementById('notifPanel').classList.toggle('open');
+}
+
+// ===== TOAST =====
+function showToast(message, type = 'info') {
+  const icons = { success: '✅', error: '❌', warning: '⚠️', info: 'ℹ️' };
+  const container = document.getElementById('toastContainer');
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `<span class="toast-icon">${icons[type]}</span><span>${message}</span>`;
+  container.appendChild(toast);
+  setTimeout(() => toast.style.opacity = '0', 3000);
+  setTimeout(() => toast.remove(), 3500);
+}
+
+// ===== MODALS =====
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ===== SOS =====
+function triggerSOS() {
+  showToast('🚨 EMERGENCY SOS ACTIVATED! Dispatching ambulance & notifying family...', 'error');
+  setTimeout(() => showToast('🚑 Ambulance AMB-042 dispatched • ETA: 8 minutes', 'success'), 1500);
+  setTimeout(() => showToast('📱 Family members notified via SMS', 'info'), 2500);
+  setTimeout(() => showPage('ambulance'), 3000);
+}
+
+// ===== AMBULANCE =====
+function bookAmbulance() {
+  showToast('🚑 Ambulance dispatched! AMB-042 is on its way...', 'success');
+  setTimeout(() => showToast('📍 Tracking ambulance in real-time', 'info'), 1500);
+}
+
+// ===== APPOINTMENT =====
+function confirmBooking() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('open'));
+  showToast('📅 Appointment booked successfully! Confirmation sent via SMS & email.', 'success');
+}
+
+function openConsultModal(name, spec) {
+  document.getElementById('consultModalTitle').textContent = `Book with ${name}`;
+  openModal('consultModal');
+}
+
+// ===== CART =====
+function addToCart(name, price) {
+  const numPrice = parseFloat(price.replace('₹', '').replace(',', ''));
+  cart.push({ name, price: numPrice });
+  cartTotal += numPrice;
+  document.getElementById('cartCountBadge').textContent = cart.length;
+  showToast(`💊 ${name} added to cart`, 'success');
+  renderCart();
+}
+
+function renderCart() {
+  const container = document.getElementById('cartItems');
+  if (cart.length === 0) {
+    container.innerHTML = '<div style="text-align:center;color:var(--text3);padding:20px;">Your cart is empty</div>';
+    document.getElementById('cartSubtotal').textContent = '₹0.00';
+    document.getElementById('cartTotal').textContent = '₹0.00';
+    return;
+  }
+  container.innerHTML = cart.map((item, i) => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);">
+      <span style="font-size:14px;">💊 ${item.name}</span>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-weight:600;color:var(--honey);">₹${item.price.toFixed(2)}</span>
+        <button onclick="removeFromCart(${i})" style="background:none;border:none;color:var(--danger);cursor:pointer;font-size:16px;">✕</button>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('cartSubtotal').textContent = `₹${cartTotal.toFixed(2)}`;
+  document.getElementById('cartTotal').textContent = `₹${cartTotal.toFixed(2)}`;
+}
+
+function removeFromCart(index) {
+  cartTotal -= cart[index].price;
+  cart.splice(index, 1);
+  document.getElementById('cartCountBadge').textContent = cart.length;
+  renderCart();
+}
+
+function checkoutCart() {
+  if (cart.length === 0) { showToast('Cart is empty!', 'warning'); return; }
+  closeModal('cartModal');
+  cart = []; cartTotal = 0;
+  document.getElementById('cartCountBadge').textContent = '0';
+  renderCart();
+  showToast('🎉 Order placed successfully! Delivery in 45 minutes.', 'success');
+  setTimeout(() => showToast('📦 Order #HC-' + Math.floor(Math.random()*1000+4900) + ' confirmed', 'info'), 1500);
+}
+
+// ===== SYMPTOM CHECK =====
+function runSymptomCheck() {
+  const sym = document.getElementById('symptomSelect').value;
+  if (sym === 'Select symptom...') { showToast('Please select a symptom first', 'warning'); return; }
+  const msg = `I have a ${sym.toLowerCase()}. Please analyze.`;
+  sendQuickMsg(msg);
+  showToast(`🔍 Analyzing ${sym}...`, 'info');
+}
+
+// ===== AI CHAT =====
+const aiResponses = {
+  'headache': 'For headache and fever, this could indicate a viral infection, flu, or in some cases, more serious conditions. I recommend: 1) Rest and hydration 2) Paracetamol for fever management 3) If fever exceeds 103°F or persists >3 days, consult a doctor immediately. Would you like me to book an urgent consultation?',
+  'blood report': 'I can analyze blood reports! Your recent CBC from June 3, 2026 shows: ✅ Hemoglobin: 13.2 g/dL (Normal) ✅ WBC: 6,800/µL (Normal) ⚠️ Blood Sugar (Fasting): 108 mg/dL (Slightly elevated — pre-diabetic range). I recommend monitoring your sugar levels and reducing refined carbohydrates.',
+  'diabetes': '🥗 **Diabetes-Friendly Diet Plan for You:**\n\n**Breakfast:** Oats with nuts (No sugar), Green tea\n**Lunch:** Brown rice + Dal + Sabzi + Salad\n**Evening Snack:** Handful of almonds, Cucumber\n**Dinner:** Roti + Mixed vegetable curry\n\nAvoid: White bread, sugary drinks, processed foods. Target: <1800 calories/day. Exercise: 30 min walk daily.',
+  'heart': '🏃 **Heart-Healthy Exercise Plan:**\n\n**Week 1-2:** 20 min brisk walking daily\n**Week 3-4:** 30 min walking + 10 min stretching\n**Month 2:** Add swimming or cycling 3x/week\n\nTarget heart rate during exercise: 100-140 bpm. Avoid sudden strenuous activity. Yoga (pranayama) is excellent for heart health. Get an annual ECG checkup.',
+  'default': 'Thank you for sharing that. Based on what you\'ve described, here are my recommendations:\n\n1. 🏥 **Consult a specialist** — I can book an appointment for you\n2. 💊 **Medication guidance** — Please share your current prescriptions\n3. 🔬 **Diagnostic tests** — A blood panel may help clarify this\n4. 🥗 **Lifestyle changes** — Diet and exercise can make a significant difference\n\nWould you like me to connect you with a doctor right now?'
+};
+
+function getAIResponse(msg) {
+  const lower = msg.toLowerCase();
+  if (lower.includes('headache') || lower.includes('fever') || lower.includes('pain')) return aiResponses['headache'];
+  if (lower.includes('blood') || lower.includes('report') || lower.includes('lab')) return aiResponses['blood report'];
+  if (lower.includes('diabetes') || lower.includes('diet') || lower.includes('sugar')) return aiResponses['diabetes'];
+  if (lower.includes('heart') || lower.includes('exercise') || lower.includes('cardio')) return aiResponses['heart'];
+  return aiResponses['default'];
+}
+
+function addChatMsg(content, isUser) {
+  const container = document.getElementById('chatContainer');
+  const div = document.createElement('div');
+  div.className = `chat-msg ${isUser ? 'user' : 'ai'}`;
+  div.innerHTML = `
+    <div class="chat-avatar" style="background:${isUser ? 'linear-gradient(135deg,var(--honey),var(--amber))' : 'linear-gradient(135deg,var(--honey),var(--purple))'};">
+      ${isUser ? '👤' : '🤖'}
+    </div>
+    <div class="chat-bubble">${content}</div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addTypingIndicator() {
+  const container = document.getElementById('chatContainer');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ai';
+  div.id = 'typingIndicator';
+  div.innerHTML = `
+    <div class="chat-avatar" style="background:linear-gradient(135deg,var(--honey),var(--purple));">🤖</div>
+    <div class="chat-bubble"><div class="typing"><span></span><span></span><span></span></div></div>
+  `;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function removeTypingIndicator() {
+  const ti = document.getElementById('typingIndicator');
+  if (ti) ti.remove();
+}
+
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const msg = input.value.trim();
+  if (!msg) return;
+  input.value = '';
+  addChatMsg(msg, true);
+  addTypingIndicator();
+  setTimeout(() => {
+    removeTypingIndicator();
+    addChatMsg(getAIResponse(msg), false);
+  }, 1200);
+}
+
+function sendQuickMsg(msg) {
+  document.getElementById('chatInput').value = msg;
+  sendChat();
+  showPage('ai');
+}
+
+function clearChat() {
+  const container = document.getElementById('chatContainer');
+  container.innerHTML = `
+    <div class="chat-msg ai">
+      <div class="chat-avatar" style="background:linear-gradient(135deg,var(--honey),var(--purple));">🤖</div>
+      <div class="chat-bubble">Chat cleared! How can I help you today? 😊</div>
+    </div>`;
+  showToast('Chat cleared', 'info');
+}
+
+// ===== DONATE =====
+function setDonateAmt(amt) {
+  document.getElementById('donateAmtInput').value = amt.replace('₹', '').replace(',', '');
+}
+
+// ===== INIT =====
+renderCart();
+</script>
+</body>
+</html>
